@@ -1,4 +1,4 @@
-<# Interactive M365 DNS lookup start. #>
+<# Interactive M365 DNS lookup v0.3 #>
 $m365_exo   = 1;
 $m365_teams = 1;
 $m365_mdm   = 1;
