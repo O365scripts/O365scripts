@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Connect to MSOL.
+	Connect to MSOL.
 
 .NOTES
  > There are two versions of the PowerShell module that you use to connect to Office 365 and administer user accounts, groups, and licenses:
@@ -16,6 +16,7 @@
 .LINK
 https://docs.microsoft.com/en-us/office365/enterprise/powershell/connect-to-office-365-powershell
 https://docs.microsoft.com/en-us/office365/enterprise/powershell/manage-office-365-with-office-365-powershell
+https://docs.microsoft.com/en-us/powershell/azure/active-directory/install-msonlinev1?view=azureadps-1.0
 https://www.microsoft.com/en-us/download/details.aspx?id=54616
 #>
 
@@ -26,7 +27,7 @@ Install-Module MSOnline -Scope CurrentUser -Force -Confirm:$false;
 <# Force reinstallation of the MSOL module? #>
 Remove-Module MSOnline -Force -Confirm:$false -ErrorAction SilentlyContinue; Install-Module MSOnline -Force -Confirm:$false;
 
-<# Connect to MSOL with or without using MFA? #>
+<# Connect to MSOL? #>
 Connect-MsolService;
 
 <# Connect to MSOL without using MFA but cache credentials? #>
