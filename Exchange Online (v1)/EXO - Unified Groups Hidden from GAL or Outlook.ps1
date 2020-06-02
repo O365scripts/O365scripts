@@ -39,10 +39,10 @@ if ($o365groups -ne $null) {
 Get-UnifiedGroup | select DisplayName,PrimarySmtpAddress,HiddenFromAddressListsEnabled,HiddenFromExchangeClientsEnabled | Out-GridView;
 
 <# Set a single O365 group to be hidden from GAL/Outlook. #>
-    $o365group = "o365grouptest@domain.com";
-	$hidden = $false;
+$o365group = "o365grouptest@domain.com";
+$hidden = $false;
 Set-UnifiedGroup $o365group -HiddenFromAddressListsEnabled:$hidden -HiddenFromExchangeClientsEnabled:$hidden;
 
 <# Confirm if a single O365 group is set to be hidden from GAL/Outlook? #>
-    $o365group = "o365group@domain.com";
+$o365group = "o365group@domain.com";
 Get-UnifiedGroup $o365group | select DisplayName,PrimarySmtpAddress,HiddenFromAddressListsEnabled,HiddenFromExchangeClientsEnabled;
