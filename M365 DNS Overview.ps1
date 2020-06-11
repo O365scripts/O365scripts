@@ -45,4 +45,4 @@ Write-Host -NoNewline -Fore Green "MX records: "; $dns_mx;
 Write-Host -Fore Red "===============";
 $doitagain = Read-Host -Prompt "Do you wish to lookup another domain? <y/n>";
 }
-while ($doitagain -eq "y*")
+while ($doitagain -like "y*")
