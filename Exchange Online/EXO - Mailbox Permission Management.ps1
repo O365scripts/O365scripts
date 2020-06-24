@@ -24,5 +24,6 @@ Foreach ($m in $mbox) {
 		Write-Host -NoNewline " to ";
 		Write-Host -NoNewline -Fore Yellow $grant_to;
 		Write-Host -NoNewline ".";
+	#Remove-MailboxPermission -Identity $m.PrimarySmtpAddress -User $grant_to -AccessRights FullAccess -InheritanceType All -Confirm:$false -ErrorAction Continue;
 	Add-MailboxPermission -Identity $m.PrimarySmtpAddress -User $grant_to -AccessRights FullAccess -AutoMapping:$false -ErrorAction Continue;
 	}
