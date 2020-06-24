@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-Mailbox Permissions Management
+Mailbox Permission Management
 .NOTES
 
 .LINK
