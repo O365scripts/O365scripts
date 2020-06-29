@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Connect to Exchange Online v2 PowerShell.
+Connect to Exchange Online v2 PowerShell.
 
 .NOTES
  > The EXO V2 module uses Modern authentication for all cmdlets.
@@ -23,11 +23,11 @@ Install-Module ExchangeOnlineManagement -Scope CurrentUser -Confirm:$false;
 <# Reinstall EXO v2 module? #>
 Remove-Module ExchangeOnlineManagement -Force -Confirm:$false;
 
-<# Connect to EXO v2? #>
+<# Connect to EXO v2. #>
 $me = "admin@tenantname.onmicrosoft.com";
 Connect-ExchangeOnline -UserPrincipalName $me;
 
-<# Connect to EXO v2 using cached credentials? #>
+<# Connect to EXO v2 using stored credentials. #>
 $me = "";
 $creds = Get-Credential -UserName $me -Message "Login:";
 Connect-ExchangeOnline -Credential $UserCredential
