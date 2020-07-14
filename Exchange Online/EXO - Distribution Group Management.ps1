@@ -25,6 +25,8 @@ $list_dg | % {
         }
     $i++
     };
+
+<# Preview results? #>
 $report | Out-GridView;
 
 <# Export results to CSV file. #>
