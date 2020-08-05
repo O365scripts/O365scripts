@@ -5,20 +5,29 @@
 .NOTES
  > Download Skype for Business PowerShell module: https://www.microsoft.com/en-us/download/details.aspx?id=39366
  > Adjust the $me variable with your global admin's address.
- > Make sure the $PSVersionTable is up to date.
- > You might need to update WMF and .NET if connecting from an older machine.
+ > Make sure the $PSVersionTable is at least 5.1, otherwise proceed with updating the Windows Management Framework.
+ > In some cases, local DNS will prevent connectivity to the proper endpoint which can be enforced by using the -OverrideAdminDomain flag.
 
 .LINK
 https://www.microsoft.com/en-us/download/details.aspx?id=39366
 https://docs.microsoft.com/en-us/SkypeForBusiness/set-up-your-computer-for-windows-powershell/download-and-install-the-skype-for-business-online-connector
 https://docs.microsoft.com/en-us/SkypeForBusiness/set-up-your-computer-for-windows-powershell/set-up-your-computer-for-windows-powershell
+https://docs.microsoft.com/en-us/SkypeForBusiness/troubleshoot/hybrid-conferencing/cant-connect-to-sfb-remote-powershell
 #>
 
 <# Connect to Skype for Business Online. #>
-$me = "admin@domain.onmicrosoft.com";
+$me = "admin@tenantname.onmicrosoft.com";
 Import-Module SkypeOnlineConnector;
 $session_sfb = New-CsOnlineSession -UserName $me -SessionOption (New-PSSessionOption -IdleTimeoutMSec (30 *60*1000));
 Import-PSSession $session_sfb;
+
+<# Connect to Skype for Business Online and override endpoint. #>
+$me = "admin@tenantname.onmicrosoft.com";
+$tenant = "tenantname"
+Import-Module SkypeOnlineConnector;
+$session_sfb = New-CsOnlineSession -UserName $me -SessionOption (New-PSSessionOption -IdleTimeoutMSec (30 *60*1000)) -OverrideAdminDomain "$tenant.onmicrosoft.com";
+Import-PSSession $session_sfb;
+
 
 <# Close SFB session and clear credentials? #>
 Remove-PSSession $session_sfb;
