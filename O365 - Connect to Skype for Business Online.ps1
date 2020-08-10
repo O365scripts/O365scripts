@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Connect to Skype for Business Online PowerShell
+Connect to Skype for Business Online PowerShell
 
 .NOTES
  > Download Skype for Business PowerShell module: https://www.microsoft.com/en-us/download/details.aspx?id=39366
@@ -18,14 +18,15 @@ https://docs.microsoft.com/en-us/SkypeForBusiness/troubleshoot/hybrid-conferenci
 <# Connect to Skype for Business Online. #>
 $me = "admin@tenantname.onmicrosoft.com";
 Import-Module SkypeOnlineConnector;
-$session_sfb = New-CsOnlineSession -UserName $me -SessionOption (New-PSSessionOption -IdleTimeoutMSec (30 *60*1000));
+$session_sfb = New-CsOnlineSession -UserName $me;
 Import-PSSession $session_sfb;
+
 
 <# Connect to Skype for Business Online and override endpoint. #>
 $me = "admin@tenantname.onmicrosoft.com";
-$tenant = "tenantname"
+$tenant = "tenantname";
 Import-Module SkypeOnlineConnector;
-$session_sfb = New-CsOnlineSession -UserName $me -SessionOption (New-PSSessionOption -IdleTimeoutMSec (30 *60*1000)) -OverrideAdminDomain "$tenant.onmicrosoft.com";
+$session_sfb = New-CsOnlineSession -UserName $me -OverrideAdminDomain "$tenant.onmicrosoft.com";
 Import-PSSession $session_sfb;
 
 
@@ -33,21 +34,38 @@ Import-PSSession $session_sfb;
 Remove-PSSession $session_sfb;
 $creds = $null;
 
+
 <# Connect to Skype for Business Online without MFA enabled but store credentials. #>
 $me = "";
 $creds = Get-Credential -UserName $me -Message "Login:";
 Import-Module SkypeOnlineConnector;
-$session_sfb = New-CsOnlineSession -UserName $me -Credential $creds -SessionOption (New-PSSessionOption -IdleTimeoutMSec (30 *60*1000));
+$session_sfb = New-CsOnlineSession -UserName $me -Credential $creds;
 Import-PSSession $session_sfb;
+
 
 <# Connect to Skype for Business Online without MFA and witout storing credentials. #>
 $me = "";
 Import-Module SkypeOnlineConnector;
-$session_sfb = New-CsOnlineSession -UserName $me -Credential (Get-Credential -UserName $me -Message "Login:") -SessionOption (New-PSSessionOption -IdleTimeoutMSec (30 *60*1000));
+$session_sfb = New-CsOnlineSession -UserName $me -Credential (Get-Credential -UserName $me -Message "Login:");
 Import-PSSession $session_sfb;
 
 
+<# TROUBLESHOOTING #>
+
+<# PS version up to date? #>
+<# Basic authentatication enabled? #>
+
 <# Skype for Business module installed? #>
 Get-Module SkypeOnlineConnector -ListAvailable;
-<# Import module directly? #>
+
+<# Import SFB module directly from expected path? #>
 Import-Module ($env:ProgramFiles + "\\Common Files\\Skype for Business Online\\Modules\\SkypeOnlineConnector\\SkypeOnlineConnector.psd1");
+
+<# #>
+
+$session_sfb = New-CsOnlineSession -UserName $me `
+    -OverrideAdminUri "$tenant.onmicrosoft.com" ` # DNS issues?
+    -Credential (Get-Credential -UserName $me -Message "Login:") ` # MFA disabled.
+    -SessionOption (New-PSSessionOption -IdleTimeoutMSec (30 *60*1000)) ` # Custom timeout?
+    ;
+
