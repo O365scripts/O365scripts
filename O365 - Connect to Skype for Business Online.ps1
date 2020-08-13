@@ -19,7 +19,7 @@ https://docs.microsoft.com/en-us/SkypeForBusiness/troubleshoot/hybrid-conferenci
 $me = "admin@tenantname.onmicrosoft.com";
 Import-Module SkypeOnlineConnector;
 $session_sfb = New-CsOnlineSession -UserName $me;
-Import-PSSession $session_sfb;
+Import-PSSession $session_sfb -AllowClobber;
 
 
 <# Connect to Skype for Business Online and override endpoint. #>
