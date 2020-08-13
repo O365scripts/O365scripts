@@ -27,7 +27,7 @@ $me = "admin@tenantname.onmicrosoft.com";
 $tenant = "tenantname";
 Import-Module SkypeOnlineConnector;
 $session_sfb = New-CsOnlineSession -UserName $me -OverrideAdminDomain "$tenant.onmicrosoft.com";
-Import-PSSession $session_sfb;
+Import-PSSession $session_sfb -AllowClobber;
 
 
 <# Close SFB session and clear credentials? #>
