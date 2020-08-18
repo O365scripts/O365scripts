@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-Microsoft Teams Voice User Number Management
+Skype/Teams Voice User Number Management
 
 .NOTES
 The emergency location that is assigned to the user must match the area code of the user number that will be assigned.
