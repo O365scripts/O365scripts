@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Creating an Auto-Attendant or Call Queue Resource Account.
+Resource Account Creation and Management
 
 .NOTES
 You can only assign Cloud call queues toll and toll-free service phone numbers that you got in the Microsoft Teams admin center or transferred from another service provider.
@@ -29,19 +29,27 @@ $session_sfb = New-CsOnlineSession -UserName $me;
 Import-PSSession $session_sfb;
 
 
-<# Create an auto-attendant resource account? #>
+<# Create an auto-attendant resource account. #>
 $upn = "aa@domain.com";
 $display = "Auto Attendant Resource Account";
 $id_aa = "ce933385-9390-45d1-9512-c8d228074e07";
 New-CsOnlineApplicationInstance -ApplicationId $id_aa -UserPrincipalName $upn -DisplayName $display;
 
-<# Create a call queue resource account? #>
+
+<# Create a call queue resource account. #>
 $upn = "cq@domain.com";
 $display = "Call Queue Resource Account";
 $id_cq = "11cd3e2e-fccb-42ad-ad00-878b93575e07";
 New-CsOnlineApplicationInstance -ApplicationId $id_cq -UserPrincipalName $upn -DisplayName $display;
 
 
-<# Assign hybrid number to resource account? #>
+<# Select an unassigned service number and assign it to the selected resource account. #>
+$number = (Get-CsOnlineTelephoneNumber -InventoryType Service -IsNotAssigned | Out-GridView -OutputMode Single).Id
+$user = (Get-CsOnlineApplicationInstance | Out-GridView -OutputMode Single).UserPrincipalName;
+Set-CsOnlineApplicationEndpoint -Uri "sip:$user" -PhoneNumber $number;
+
+
+<# Assign an hybrid number to a resource account. #>
+$user = "resource@domain.com";
 $number = "+11231231234";
 Set-CsOnlineApplicationInstance -UserPrincipalName $upn -OnpremPhoneNumber $number;
