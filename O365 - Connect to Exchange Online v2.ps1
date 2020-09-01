@@ -14,18 +14,32 @@ https://docs.microsoft.com/en-us/powershell/exchange/exchange-online/exchange-on
 https://www.powershellgallery.com/packages/exchangeonlinemanagement/
 #>
 
+<# Quickrun: Connect to Exchange Online v2. #>
+$me = "admin@tenantname.onmicrosoft.com";
+Set-ExecutionPolicy RemoteSigned;
+Install-Module PowerShellGet -Force -Confirm:$false;
+Install-Module ExchangeOnlineManagement -Confirm:$false;
+Import-Module ExchangeOnlineManagement;
+Connect-ExchangeOnline -UserPrincipalName $me;
+
+
 <# Update PSGet? #>
 Install-Module PowerShellGet -Force -Confirm:$false;
+
 <# Install EXO v2 module as administrator? #>
 Install-Module ExchangeOnlineManagement -Confirm:$false;
+
 <# Install EXO v2 module as user? #>
 Install-Module ExchangeOnlineManagement -Scope CurrentUser -Confirm:$false;
+
 <# Reinstall EXO v2 module? #>
 Remove-Module ExchangeOnlineManagement -Force -Confirm:$false;
+
 
 <# Connect to EXO v2. #>
 $me = "admin@tenantname.onmicrosoft.com";
 Connect-ExchangeOnline -UserPrincipalName $me;
+
 
 <# Connect to EXO v2 using stored credentials. #>
 $me = "";
