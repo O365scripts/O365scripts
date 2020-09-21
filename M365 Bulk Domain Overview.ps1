@@ -6,51 +6,51 @@
 
 <# List of domains to lookup the DNS records?  #>
 #$ListDomains = "", "", "";
-$ListDomains = Get-Content -Path "$env:USERPROFILE\Desktop\List of Domains.txt";
-#$ListDomains = Import-Csv "$env:USERPROFILE\Desktop\Get-DomainOverview_Input.csv";
 #$ListDomains = Read-Host -Prompt "Enter domain";
+$ListDomains = Get-Content -Path "$env:USERPROFILE\Desktop\List of Domains.txt";
+#$ListDomains = Import-Csv "$env:USERPROFILE\Desktop\List of Domains.csv";
 $ListDomains = "hotmail.com", "google.com", "yahoo.com";
 
-<# #>
+<# Build a report of the general DNS and Office 365-related records of selected domains. #>
 $Report = [System.Collections.Generic.List[Object]]::new();
 $ListDomains | % {
 	<# #>
-	$DnsNS		= (Resolve-Dnsname -Type "NS" -Name $_ -ErrorAction SilentlyContinue).ForEach({$_[0].NameHost}) | Out-String;
-	$DnsA		= (Resolve-Dnsname -Type "A" -Name $_ -ErrorAction SilentlyContinue).ForEach({$_[0].IPAddress}) | Out-String;
-	$DnsMx		= (Resolve-DnsName -Type "MX" -Name $_ -ErrorAction SilentlyContinue | sort Preference).ForEach({"$($_.NameExchange) [$($_.Preference)]"}) | Out-String;
-	$DnsTxt		= (Resolve-Dnsname -Type "TXT" -Name $_ -ErrorAction SilentlyContinue).ForEach({$_[0].Strings}) | Out-String;
+	$DnsNS		= (Resolve-Dnsname -ErrorAction SilentlyContinue -Type "NS" -Name $_).ForEach({$_[0].NameHost}) | Out-String;
+	$DnsA		= (Resolve-Dnsname -ErrorAction SilentlyContinue -Type "A" -Name $_).ForEach({$_[0].IPAddress}) | Out-String;
+	$DnsMx		= (Resolve-DnsName -ErrorAction SilentlyContinue -Type "MX" -Name $_ | sort Preference).ForEach({"$($_.NameExchange) [$($_.Preference)]"}) | Out-String;
+	$DnsTxt		= (Resolve-Dnsname -ErrorAction SilentlyContinue -Type "TXT" -Name $_).ForEach({$_[0].Strings}) | Out-String;
 	$DnsAuto	= (Resolve-DnsName -ErrorAction SilentlyContinue -Type "CNAME" -Name "autodiscover.$_").NameHost;
-	$DnsDkim1	= (Resolve-DnsName -Type "CNAME" -Name "selector1._domainkey.$_" -ErrorAction SilentlyContinue).NameHost;
-	$DnsDkim2	= (Resolve-DnsName -Type "CNAME" -Name "selector2._domainkey.$_" -ErrorAction SilentlyContinue).NameHost;
+	$DnsDkim1	= (Resolve-DnsName -ErrorAction SilentlyContinue -Type "CNAME" -Name "selector1._domainkey.$_").NameHost;
+	$DnsDkim2	= (Resolve-DnsName -ErrorAction SilentlyContinue -Type "CNAME" -Name "selector2._domainkey.$_").NameHost;
 	$DnsSfb1	= (Resolve-Dnsname -ErrorAction SilentlyContinue -Type "CNAME" -Name "lyncdiscover.$_").NameHost;
 	$DnsSfb2	= (Resolve-Dnsname -ErrorAction SilentlyContinue -Type "CNAME" -Name "sip.$_").NameHost;
-	$DnsSfbSrv1	= (Resolve-DnsName -ErrorAction SilentlyContinue -Type "SRV" -Name "_sip._tls.$_").ForEach({if ("" -ne $_.NameTarget) {$_[0].NameTarget}}) | Out-String;
-	$DnsSfbSrv2	= (Resolve-DnsName -ErrorAction SilentlyContinue -Type "SRV" -Name "_sipfederationtls._tcp.$_").ForEach({if ("" -ne $_.NameTarget) {$_[0].NameTarget}}) | Out-String;
+	$DnsSfbSrv1	= (Resolve-DnsName -ErrorAction SilentlyContinue -Type "SRV" -Name "_sip._tls.$_").ForEach({if ("" -ne $_.NameTarget) {"$($_[0].NameTarget):$($_[0].Port)"}}) | Out-String;
+	$DnsSfbSrv2	= (Resolve-DnsName -ErrorAction SilentlyContinue -Type "SRV" -Name "_sipfederationtls._tcp.$_").ForEach({if ("" -ne $_.NameTarget) {"$($_[0].NameTarget):$($_[0].Port)"}}) | Out-String;
 	$DnsMdm1 	= (Resolve-Dnsname -ErrorAction SilentlyContinue -Type "CNAME" -Name "enterpriseregistration.$_").NameHost;
 	$DnsMdm2 	= (Resolve-Dnsname -ErrorAction SilentlyContinue -Type "CNAME" -Name "enterpriseenrollment.$_").NameHost;
+	$DnsSoa 	= (Resolve-Dnsname -ErrorAction SilentlyContinue -Type "CNAME" -Name "$_").NameAdministrator;
 
 	$ReportLine = [PSCustomObject] @{
-		#Domain		= $_.Identity
-		Domain		= $_
-		NS		= $DnsNS
-		A		= $DnsA
-		MX		= $DnsMx
-		TXT		= $DnsTxt
-		Autodiscover	= $DnsAuto
-		DKIM_1		= $DnsDkim1
-		DKIM_2		= $DnsDkim2
-		SkypeCNAME_1	= $DnsSfb1
-		SkypeCNAME_2	= $DnsSfb2
-		SkypeSRV_1	= $DnsSfbSrv1
-		SkypeSRV_2	= $DnsSfbSrv2
-		MDM_1		= $DnsMdm1
-		MDM_2		= $DnsMdm2
-		#DkimEnabled	= $_.Enabled
-		#DkimStatus	= $_.Status
+		Domain			= $_
+		NS			= $DnsNS
+		A			= $DnsA
+		MX			= $DnsMx
+		TXT			= $DnsTxt
+		Autodiscover		= $DnsAuto
+		DKIM_1			= $DnsDkim1
+		DKIM_2			= $DnsDkim2
+		SkypeCNAME_1		= $DnsSfb1
+		SkypeCNAME_2		= $DnsSfb2
+		SkypeSRV_1		= $DnsSfbSrv1
+		SkypeSRV_2		= $DnsSfbSrv2
+		MDM_1			= $DnsMdm1
+		MDM_2			= $DnsMdm2
+		SOA			= $DnsSoa
 	}
 	$Report.Add($ReportLine)
 }
 
-<# Export results to? #>
-$Report | Export-Csv -Encoding ut8 -NoTypeInformation -Path "$env:USERPROFILE\Desktop\dns.txt";
+<# Export results.  #>
+$Report | Export-Csv -Encoding ut8 -NoTypeInformation -Path "$env:USERPROFILE\Desktop\export.csv";
 #$Report | Out-GridView;
+#$Report | Format-List;
