@@ -1,15 +1,23 @@
 <#
 .SYNOPSIS
+M365 DNS Domain Bulk Overview
+
 .NOTES
+ +Use your prefered method to feed value(s) to $ListDomains by manual input or from a txt/csv file.
+
 .LINK
+https://docs.microsoft.com/en-us/powershell/module/dnsclient/resolve-dnsname?view=win10-ps
+https://docs.microsoft.com/en-us/microsoft-365/admin/get-help-with-domains/create-dns-records-at-any-dns-hosting-provider?view=o365-worldwide
 #>
 
-<# List of domains to lookup the DNS records?  #>
-#$ListDomains = "", "", "";
-#$ListDomains = Read-Host -Prompt "Enter domain";
-$ListDomains = Get-Content -Path "$env:USERPROFILE\Desktop\List of Domains.txt";
-#$ListDomains = Import-Csv "$env:USERPROFILE\Desktop\List of Domains.csv";
+<# Specify manually the list of domains to lookup the DNS records? #>
+#$ListDomains = "";
 $ListDomains = "hotmail.com", "google.com", "yahoo.com";
+<# Prompt directly for domain to lookup? #>
+#$ListDomains = Read-Host -Prompt "Enter domain";
+<# Pull domains from text or CSV? #>
+#$ListDomains = Get-Content -Path "$env:USERPROFILE\Desktop\List of Domains.txt";
+#$ListDomains = Import-Csv "$env:USERPROFILE\Desktop\List of Domains.csv";
 
 <# Build a report of the general DNS and Office 365-related records of selected domains. #>
 $Report = [System.Collections.Generic.List[Object]]::new();
