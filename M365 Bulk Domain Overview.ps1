@@ -59,6 +59,6 @@ $ListDomains | % {
 }
 
 <# Export results.  #>
-$Report | Export-Csv -Encoding ut8 -NoTypeInformation -Path "$env:USERPROFILE\Desktop\export.csv";
+$Report | Export-Csv -Encoding utf8 -NoTypeInformation -Path "$env:USERPROFILE\Desktop\export.csv";
 #$Report | Out-GridView;
 #$Report | Format-List;
