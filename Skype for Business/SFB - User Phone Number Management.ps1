@@ -46,6 +46,11 @@ Set-CsOnlineVoiceUser -Identity $user -TelephoneNumber $number -LocationID $loca
 $user = "";
 Set-CsOnlineVoiceUser -Identity $user -TelephoneNumber $null;
 
+<# Unassign number and location from a specific user and disable enterprise voice. #>
+$user = "";
+Set-CsOnlineVoiceUser -Identity $user -TelephoneNumber $null -LocationID $null;
+Set-CsUser -Identity $user -EnterpriseVoiceEnabled $false;
+
 
 <# Adjust the UsageLocation so it matches the country of the telephone number that will be assigned on a specific user. #>
 Connect-MsolService;
