@@ -11,9 +11,9 @@ https://docs.microsoft.com/en-us/powershell/module/teams/connect-microsoftteams?
 #>
 
 <# Install the Teams module as administrator? #>
-Install-Module MSOnline -Force -Confirm:$false;
+Install-Module MicrosoftTeams -Force -Confirm:$false;
 <# Install the Teams module as user? #>
-Install-Module MSOnline -Scope CurrentUser -Force -Confirm:$false;
+Install-Module MicrosoftTeams -Scope CurrentUser -Force -Confirm:$false;
 <# Force reinstallation of the Teams module? #>
 Remove-Module MicrosoftTeams -Force -Confirm:$false -ErrorAction SilentlyContinue; Install-Module MicrosofTeams -Force -Confirm:$false;
 
