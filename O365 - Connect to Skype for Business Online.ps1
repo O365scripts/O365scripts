@@ -25,12 +25,18 @@ Install-Module MicrosoftTeams -Force -Confirm:$false;
 $session_sfb = New-CsOnlineSession -OverrideAdminDomain "$tenant.onmicrosoft.com";
 Import-PSSession $session_sfb -AllowClobber;
 
-<# Connect to Skype for Business Online. #>
+<# Connect to Skype for Business Online via Teams module. #>
 $me = "";
+Import-Module MicrosoftTeams;
 #Import-Module SkypeOnlineConnector;
-$session_sfb = New-CsOnlineSession -UserName $me;
+$session_sfb = New-CsOnlineSession;
 Import-PSSession $session_sfb -AllowClobber;
 
+<# Connect to Skype for Business Online via the previous SFB module. #>
+$me = "";
+Import-Module SkypeOnlineConnector;
+$session_sfb = New-CsOnlineSession -UserName $me;
+Import-PSSession $session_sfb -AllowClobber;
 
 <# Connect to Skype for Business Online and override endpoint. #>
 $me = "admin@mytenant.onmicrosoft.com";
