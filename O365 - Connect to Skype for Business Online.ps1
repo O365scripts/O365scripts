@@ -4,7 +4,7 @@ Connect to Skype for Business Online PowerShell
 
 .NOTES
  > The latest MicrosoftTeams module now includes the New-CsOnlineSession which can be used to connect to SFBO.
- > This means you do not need to download and install the Skype for Business setup from: 
+ > This means you do not need to download and install the Skype for Business EXE setup to connect.
  > Make sure the $PSVersionTable is at least 5.1, otherwise proceed with updating the Windows Management Framework.
  > In some cases, local DNS will prevent connectivity to the proper endpoint which can be enforced by using the -OverrideAdminDomain flag.
 
