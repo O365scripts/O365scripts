@@ -13,7 +13,7 @@ $Me = "admin@mytenant.onmcirosoft.com";
 Import-Module ExchangeOnlineManagement;
 Connect-IPPSSession -UserPrincipalName $Me;
 
-<# Connect to Security & Compliance via the EXO v2 module. #>
+<# Connect to Security & Compliance. #>
 $Me = "";
 Connect-IPPSSession -UserPrincipalName $Me;
 
