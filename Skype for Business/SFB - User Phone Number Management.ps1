@@ -57,3 +57,14 @@ Connect-MsolService;
 Set-MsolUser -UserPrincipalName $user -UsageLocation "XX";
 Set-CsOnlineVoiceUser -Identity $user -TelephoneNumber $number -LocationID $location;
 Set-CsOnlineVoiceUser -Identity $user -TelephoneNumber $null;
+
+
+<# Online vs Hybrid Unassigned User Numbers? #>
+$NumberUserOnline = Get-CsOnlineTelephoneNumber -IsNotAssigned -InventoryType Subscriber;
+$NumberUserHybrid = Get-CsOnlineTelephoneNumber -NumberType Hybrid -IsNotAssigned -InventoryType Subscriber;
+$NumberUserHybrid; $NumberUserOnline;
+
+<# Online vs Hybrid Unassigned Service Numbers? #>
+$NumberServiceOnline = Get-CsOnlineTelephoneNumber -IsNotAssigned -InventoryType Service;
+$NumberServiceHybrid = Get-CsOnlineTelephoneNumber -NumberType Hybrid -IsNotAssigned -InventoryType Service;
+$NumberServiceOnline; $NumberServiceHybrid;
