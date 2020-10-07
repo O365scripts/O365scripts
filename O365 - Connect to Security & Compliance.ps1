@@ -8,7 +8,7 @@ https://docs.microsoft.com/en-us/powershell/module/exchange/connect-ippssession?
 
 <# QUICKRUN: Install and Connect to S&C via the EXO v2 module. #>
 #Set-ExecutionPolicy RemoteSigned;
-$Me = "admin@mytenant.onmcirosoft.com";
+$Me = "admin@mytenant.onmicrosoft.com";
 #Install-Module ExchangeOnlineManagement -Confirm:$false -Force;
 Import-Module ExchangeOnlineManagement;
 Connect-IPPSSession -UserPrincipalName $Me;
