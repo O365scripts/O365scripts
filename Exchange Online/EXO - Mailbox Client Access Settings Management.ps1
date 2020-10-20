@@ -7,6 +7,6 @@ https://docs.microsoft.com/en-us/powershell/module/exchange/get-distributiongrou
 https://docs.microsoft.com/en-us/powershell/module/exchange/get-distributiongroup?view=exchange-ps
 #>
 
-<# Interactive selection of one or multiple security groups and pass through each of their members to bulk adjust disable EAS, POP and IMAP. #>
+<# Interactive selection of one or multiple security groups and pass through each of their members to bulk adjust EAS, POP and IMAP mail protocols. #>
 $eas = $false; $imap = $false; $pop = $false;
 Get-DistributionGroup -RecipientTypeDetails MailUniversalSecurityGroup | Out-GridView -PassThru | % {Get-DistributionGroupMember -Identity $_.DistinguishedName | % {Set-CasMailbox -Identity $_.DistinguishedName -ActiveSyncEnabled:$eas -ImapEnabled:$imap -PopEnabled:$pop;}}
