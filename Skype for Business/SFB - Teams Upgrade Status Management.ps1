@@ -25,3 +25,9 @@ Get-CsOnlineUser | % {Grant-CsTeamsUpgradePolicy -Identity $_.Identity -PolicyNa
 $ListTeamUpgradeModes = ("Islands","Allows a single user to evaluate both clients side by side. Chats and calls can land in either client, so users must always run both clients.","IslandsWithNotify","SfBOnly","SfBOnlyWithNotify","SfBOnlyWithNotify","SfBWithTeamsCollabWithNotify","SfBWithTeamsCollabAndMeetings","SfBWithTeamsCollabAndMeetingsWithNotify","Global";
 $UpgradeMode = $ListTeamUpgradeModes | Out-GridView -OutputMode Single -Title "Select a Teams Upgrade Mode.";
 Get-CsOnlineUser | % {Grant-CsTeamsUpgradePolicy -Identity $_.Identity -PolicyName "UpgradeToTeams" -ErrorAction SilentlyContinue;}
+
+<# Confirm the current Upgrade mode on a specific user. #>
+Get-CsOnlineUser -Identity $User | select UserPrincipalName,TeamsUpgradeEffectiveMode;
+
+<# Confirm the current Upgrade mode of all users. #>
+Get-CsOnlineUser | select UserPrincipalName,TeamsUpgradeEffectiveMode | Out-GridView;
