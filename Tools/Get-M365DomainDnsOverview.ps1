@@ -1,10 +1,9 @@
 <#
 .SYNOPSIS
-
 .NOTES
-
 .LINK
-
+https://docs.microsoft.com/en-us/powershell/module/dnsclient/resolve-dnsname?view=win10-ps
+https://docs.microsoft.com/en-us/microsoft-365/admin/get-help-with-domains/create-dns-records-at-any-dns-hosting-provider?view=o365-worldwide
 .EXAMPLE
 Get-M365DomainDnsOverview;
 Get-M365DomainDnsOverview "microsoft.com";
