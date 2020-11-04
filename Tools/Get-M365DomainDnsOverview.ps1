@@ -23,7 +23,7 @@ function Get-M365DomainDnsOverview {
 	}
 	Process {
 		if ($Domain -is [string] -and ($Domain).Length -gt 0) {
-            $Domain = ($Domain).Trim();
+			$Domain = ($Domain).Trim();
 			$DnsNS		= (Resolve-Dnsname -ErrorAction SilentlyContinue -Type "NS" -Name $Domain).ForEach({$_[0].NameHost}) | Out-String;
 			$DnsA		= (Resolve-Dnsname -ErrorAction SilentlyContinue -Type "A" -Name $Domain).ForEach({$_[0].IPAddress}) | Out-String;
 			$DnsMx		= (Resolve-DnsName -ErrorAction SilentlyContinue -Type "MX" -Name $Domain | sort Preference).ForEach({if ($null -ne $($_.NameExchange)) {"$($_.NameExchange) [$($_.Preference)]"}}) | Out-String;
