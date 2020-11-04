@@ -19,42 +19,42 @@ https://docs.microsoft.com/en-us/SkypeForBusiness/set-up-your-computer-for-windo
 #>
 
 <# QUICKRUN: Install the Teams module and connect to SFBO. #>
-$me = "admin@mytenant.onmicrosoft.com";
-$tenant = "mytenant";
+$Me = "admin@mytenant.onmicrosoft.com";
+$Tenant = "mytenant";
 Install-Module MicrosoftTeams -Force -Confirm:$false;
-$session_sfb = New-CsOnlineSession -OverrideAdminDomain "$tenant.onmicrosoft.com";
-Import-PSSession $session_sfb -AllowClobber;
+$Session_Sfb = New-CsOnlineSession -OverrideAdminDomain "$Tenant.onmicrosoft.com";
+Import-PSSession $Session_Sfb;
 
 <# Connect to Skype for Business Online via Teams module. #>
-$me = "";
+$Me = "";
 Import-Module MicrosoftTeams;
 #Import-Module SkypeOnlineConnector;
-$session_sfb = New-CsOnlineSession;
-Import-PSSession $session_sfb -AllowClobber;
+$Session_Sfb = New-CsOnlineSession;
+Import-PSSession $Session_Sfb -AllowClobber;
 
 <# Connect to Skype for Business Online via the previous SFB module. #>
-$me = "";
+$Me = "";
 Import-Module SkypeOnlineConnector;
 $session_sfb = New-CsOnlineSession -UserName $me;
-Import-PSSession $session_sfb -AllowClobber;
+Import-PSSession $Session_Sfb;
 
 <# Connect to Skype for Business Online and override endpoint. #>
-$me = "admin@mytenant.onmicrosoft.com";
-$tenant = "mytenant";
+$Me = "admin@mytenant.onmicrosoft.com";
+$Tenant = "mytenant";
 Import-Module MicrosoftTeams;
 $session_sfb = New-CsOnlineSession -OverrideAdminDomain "$tenant.onmicrosoft.com";
-Import-PSSession $session_sfb -AllowClobber;
+Import-PSSession $session_sfb;
 
 <# Close SFB session and clear credentials? #>
 #Remove-PSSession $session_sfb;
-#$creds = $null;
+#$Creds = $null;
 
 <# Connect to Skype for Business Online without MFA enabled but store credentials. #>
 $me = "";
-$creds = Get-Credential -UserName $me -Message "Login:";
+$Creds = Get-Credential -UserName $me -Message "Login:";
 #Import-Module SkypeOnlineConnector;
-$session_sfb = New-CsOnlineSession -UserName $me -Credential $creds;
-Import-PSSession $session_sfb;
+$Session_Sfb = New-CsOnlineSession -UserName $me -Credential $creds;
+Import-PSSession $Session_Sfb;
 
 <# Connect to Skype for Business Online without MFA and witout storing credentials. #>
 $me = "";
