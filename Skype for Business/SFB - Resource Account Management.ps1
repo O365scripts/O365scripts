@@ -50,6 +50,17 @@ Set-CsOnlineApplicationEndpoint -Uri "sip:$user" -PhoneNumber $number;
 
 
 <# Assign an hybrid number to a resource account. #>
-$user = "resource@domain.com";
-$number = "+11231231234";
-Set-CsOnlineApplicationInstance -UserPrincipalName $upn -OnpremPhoneNumber $number;
+$User = "resource@domain.com";
+$Number = "+11231231234";
+Set-CsOnlineApplicationInstance -UserPrincipalName $User -OnpremPhoneNumber $Number;
+
+
+<# Select a resource account to be associated with a selected attendant. #>
+$Resource = (Get-CsOnlineApplicationInstance | Where {$_.ApplicationId -eq "ce933385-9390-45d1-9512-c8d228074e07"} | Out-GridView -OutputMode Single).ObjectId;
+$Attendant = (Get-CsAutoAttendant | Out-GridView -OutputMode Single).Id;
+New-CsOnlineApplicationInstanceAssociation -Identities @($Resource) -ConfigurationId $Attendant -ConfigurationType "AutoAttendant";
+
+<# Select a resource account to be associated with a selected call queue. #>
+$Resource = (Get-CsOnlineApplicationInstance | Where {$_.ApplicationId -eq "11cd3e2e-fccb-42ad-ad00-878b93575e07"} | Out-GridView -OutputMode Single).ObjectId;
+$CallQueue = (Get-CsAutoAttendant | Out-GridView -OutputMode Single).Id;
+New-CsOnlineApplicationInstanceAssociation -Identities @($Resource) -ConfigurationId $CallQueue -ConfigurationType "CallQueue";
