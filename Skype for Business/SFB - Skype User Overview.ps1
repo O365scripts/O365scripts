@@ -11,11 +11,14 @@ Install-Module MicrosoftTeams -Force -Confirm:$false;
 $Session_Sfb = New-CsOnlineSession -OverrideAdminDomain "$Tenant.onmicrosoft.com";
 Import-PSSession $Session_Sfb;
 
-<# Skype/Teams User Overview. #>
+<# Prevent output truncation... #>
+$FormatEnumerationLimit = -1;
+
+<# Export Skype/Teams User Overview. #>
 $User = "user@domain.com";
-$Path_CsvOut = "$env:USERPROFILE\Desktop"; 
-Get-CsOnlineUser -Identity $User -ErrorAction SilentlyContinue | Out-File -FilePath "$Path_CsvOut\Get-CsOnlineUser__$($User.Replace("@","_"))_$Stamp.csv";
+$Stamp = Get-Date -Format "yyyyMMddHHmmss";
+Get-CsOnlineUser -Identity $User -ErrorAction SilentlyContinue | Out-File -Encoding utf8 -FilePath "$env:USERPROFILE\Desktop\Get-CsOnlineUser__$($User.Replace("@","_"))_$Stamp.txt";
 Get-CsOnlineVoiceUser -Identity $User -ErrorAction SilentlyContinue | Out-File -FilePath "$Path_CsvOut\Get-CsOnlineVoiceUser__$($User.Replace("@","_"))_$Stamp.csv";
-Get-CsOnlineDialInConferencingUser -Identity $User -ErrorAction SilentlyContinue | Out-File -FilePath "$Path_CsvOut\CsOnlineDialInConferencingUser__$($User.Replace("@","_"))_$Stamp.csv";
-Get-CsOnlineApplicationInstance -Identity $User -ErrorAction SilentlyContinue | Out-File -FilePath "$Path_CsvOut\CsOnlineApplicationInstance__$($User.Replace("@","_"))_$Stamp.csv";
-Get-CsUser -Identity $User -ErrorAction SilentlyContinue | Out-File -FilePath "$Path_CsvOut\Get-CsUser__$($User.Replace("@","_"))_$Stamp.csv";
+Get-CsOnlineDialInConferencingUser -Identity $User -ErrorAction SilentlyContinue | Out-File -FilePath "$Path_CsvOut\Get-CsOnlineDialInConferencingUser__$($User.Replace("@","_"))_$Stamp.csv";
+Get-CsOnlineApplicationInstance -Identity $User -ErrorAction SilentlyContinue | Out-File -FilePath "$Path_CsvOut\Get-CsOnlineApplicationInstance__$($User.Replace("@","_"))_$Stamp.csv";
+#Get-CsUser -Identity $User -ErrorAction SilentlyContinue | Out-File -Encoding utf8 -FilePath "$env:USERPROFILE\Desktop\Get-CsUser__$($User.Replace("@","_"))_$Stamp.txt";
