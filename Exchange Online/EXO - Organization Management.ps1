@@ -12,7 +12,7 @@ $Me = "admin@tenantname.onmicrosoft.com";
 #Set-ExecutionPolicy RemoteSigned;
 Install-Module ExchangeOnlineManagement -Confirm:$false;
 Import-Module ExchangeOnlineManagement;
-Connect-ExchangeOnline -UserPrincipalName $me;
+Connect-ExchangeOnline -UserPrincipalName $Me;
 
 <# Hydrate tenant, one time only. #>
 Enable-OrganizationCustomization;
@@ -20,7 +20,7 @@ Enable-OrganizationCustomization;
 <# Enable auto-expanding archiving for your entire organization. #>
 Set-OrganizationConfig -AutoExpandingArchive;
 
-<# Verify current crganization configuration. #>
+<# Verify current organization configuration. #>
 Get-OrganizationConfig;
 
 <# Export Organization Configuration to file. #>
