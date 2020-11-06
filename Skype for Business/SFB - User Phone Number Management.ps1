@@ -11,12 +11,12 @@ https://docs.microsoft.com/en-us/powershell/module/skype/get-csonlinelislocation
 https://docs.microsoft.com/en-us/powershell/module/skype/new-csonlinelislocation?view=skype-ps
 #>
 
-<# Connect to Skype for Business Online and override endpoint. #>
-$me = "admin@tenantname.onmicrosoft.com";
-$tenant = "tenantname";
-Import-Module SkypeOnlineConnector;
-$session_sfb = New-CsOnlineSession -UserName $me -OverrideAdminDomain "$tenant.onmicrosoft.com";
-Import-PSSession $session_sfb -AllowClobber;
+<# QUICKRUN: Install the Teams module and connect to SFBO. #>
+$Me = "admin@mytenant.onmicrosoft.com";
+$Tenant = "mytenant";
+#Install-Module MicrosoftTeams -Force -Confirm:$false;
+$Session_Sfb = New-CsOnlineSession -OverrideAdminDomain "$Tenant.onmicrosoft.com";
+Import-PSSession $Session_Sfb;
 
 
 <# Specify manually which number and emergency location ID to assign to a specific user. #>
