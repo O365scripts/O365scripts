@@ -8,6 +8,13 @@ https://docs.microsoft.com/en-us/microsoftteams/cloud-recording
 https://aka.ms/in-region
 #>
 
+<# QUICKRUN: Install the Teams module and connect to SFBO. #>
+$Me = "admin@mytenant.onmicrosoft.com";
+$Tenant = "mytenant";
+Install-Module MicrosoftTeams -Force -Confirm:$false;
+$Session_Sfb = New-CsOnlineSession -OverrideAdminDomain "$Tenant.onmicrosoft.com";
+Import-PSSession $Session_Sfb;
+
 <# Use OneDrive for Business and SharePoint or Stream for meeting recordings. #>
 Set-CsTeamsMeetingPolicy -Identity Global -RecordingStorageMode "OneDriveForBusiness";
 
