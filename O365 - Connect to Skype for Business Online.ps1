@@ -19,14 +19,12 @@ https://docs.microsoft.com/en-us/SkypeForBusiness/set-up-your-computer-for-windo
 #>
 
 <# QUICKRUN: Install the Teams module and connect to SFBO. #>
-$Me = "admin@mytenant.onmicrosoft.com";
 $Tenant = "mytenant";
 Install-Module MicrosoftTeams -Force -Confirm:$false;
 $Session_Sfb = New-CsOnlineSession -OverrideAdminDomain "$Tenant.onmicrosoft.com";
 Import-PSSession $Session_Sfb;
 
 <# Connect to Skype for Business Online via Teams module. #>
-$Me = "";
 Import-Module MicrosoftTeams;
 #Import-Module SkypeOnlineConnector;
 $Session_Sfb = New-CsOnlineSession;
@@ -39,9 +37,8 @@ $session_sfb = New-CsOnlineSession -UserName $me;
 Import-PSSession $Session_Sfb;
 
 <# Connect to Skype for Business Online and override endpoint. #>
-$Me = "admin@mytenant.onmicrosoft.com";
+$Me = "";
 $Tenant = "mytenant";
-Import-Module MicrosoftTeams;
 $session_sfb = New-CsOnlineSession -OverrideAdminDomain "$tenant.onmicrosoft.com";
 Import-PSSession $session_sfb;
 
