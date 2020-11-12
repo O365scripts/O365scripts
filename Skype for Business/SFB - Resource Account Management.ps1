@@ -62,5 +62,5 @@ New-CsOnlineApplicationInstanceAssociation -Identities @($Resource) -Configurati
 
 <# Select a resource account to be associated with a selected call queue. #>
 $Resource = (Get-CsOnlineApplicationInstance | Where {$_.ApplicationId -eq "11cd3e2e-fccb-42ad-ad00-878b93575e07"} | Out-GridView -OutputMode Single).ObjectId;
-$CallQueue = (Get-CsAutoAttendant | Out-GridView -OutputMode Single).Id;
+$CallQueue = (Get-CsCallQueue | Out-GridView -OutputMode Single).Id;
 New-CsOnlineApplicationInstanceAssociation -Identities @($Resource) -ConfigurationId $CallQueue -ConfigurationType "CallQueue";
