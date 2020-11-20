@@ -21,7 +21,7 @@ Set-CsTeamsMeetingPolicy -Identity Global -RecordingStorageMode "OneDriveForBusi
 Set-CsTeamsMeetingPolicy -Identity Global -RecordingStorageMode "Stream";
 
 <# Allow storing recording outside of region. All meeting recordings will be permanently stored in another region, and can't be migrated. #>
-Set-CsTeamsMeetingPolicy -Identity Global –AllowCloudRecording $true -AllowRecordingStorageOutsideRegion $true;
+Set-CsTeamsMeetingPolicy -Identity Global -AllowCloudRecording $true -AllowRecordingStorageOutsideRegion $true;
 
 <# Confirm meeting policy configuration. #>
 Get-CsTeamsMeetingPolicy -Identity Global;
