@@ -13,7 +13,8 @@ https://docs.microsoft.com/en-us/powershell/module/skype/new-csonlinelislocation
 
 <# QUICKRUN: Install the Teams module and connect to SFBO. #>
 $Tenant = "mytenant";
-#Install-Module MicrosoftTeams -Force -Confirm:$false;
+Install-Module MicrosoftTeams -Force -Confirm:$false;
+Import-Module MicrosoftTeams;
 $Session_Sfb = New-CsOnlineSession -OverrideAdminDomain "$Tenant.onmicrosoft.com";
 Import-PSSession $Session_Sfb;
 
