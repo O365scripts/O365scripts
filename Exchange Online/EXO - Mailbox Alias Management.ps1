@@ -8,6 +8,14 @@ https://docs.microsoft.com/en-us/powershell/module/exchange/set-mailbox?view=exc
 https://docs.microsoft.com/en-us/powershell/module/exchange/get-mailbox?view=exchange-ps
 #>
 
+<# QUICKRUN: Install and Connect to EXO v2. #>
+$Me = "admin@tenantname.onmicrosoft.com";
+#Set-ExecutionPolicy RemoteSigned;
+#Install-Module ExchangeOnlineManagement -Confirm:$false;
+Import-Module ExchangeOnlineManagement;
+Connect-ExchangeOnline -UserPrincipalName $me;
+
+
 <# Add or remove an alias on a specific mailbox.#>
 $mbox = "user@domain.com";
 $alias = "user2@domain.com";
