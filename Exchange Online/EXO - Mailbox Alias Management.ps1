@@ -22,10 +22,10 @@ $alias = "user2@domain.com";
 Set-Mailbox $mbox -EmailAddresses @{add=$alias};
 Set-Mailbox $mbox -EmailAddresses @{remove=$alias};
 
-<#####################>
 
 <# Add multiple aliases from a CSV into a specified mailbox. #>
-$User = "user@domain.com";$PathCsv = "$env:USERPROFILE\Desktop\BulkAddAliasesToMailbox.csv";
+$User = "user@domain.com";
+$PathCsv = "$env:USERPROFILE\Desktop\BulkAddAliasesToMailbox.csv";
 Import-Csv $PathCsv | % {Set-Mailbox $User -EmailAddresses @{add=$_.SmtpAddress}};
 
 <# Verify aliases. #>
