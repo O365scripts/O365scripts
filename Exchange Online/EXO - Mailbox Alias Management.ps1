@@ -11,16 +11,16 @@ https://docs.microsoft.com/en-us/powershell/module/exchange/get-mailbox?view=exc
 <# QUICKRUN: Install and Connect to EXO v2. #>
 $Me = "admin@tenantname.onmicrosoft.com";
 #Set-ExecutionPolicy RemoteSigned;
-#Install-Module ExchangeOnlineManagement -Confirm:$false;
+Install-Module ExchangeOnlineManagement -Confirm:$false;
 Import-Module ExchangeOnlineManagement;
 Connect-ExchangeOnline -UserPrincipalName $me;
 
 
 <# Add or remove an alias on a specific mailbox.#>
-$mbox = "user@domain.com";
-$alias = "user2@domain.com";
-Set-Mailbox $mbox -EmailAddresses @{add=$alias};
-Set-Mailbox $mbox -EmailAddresses @{remove=$alias};
+$User = "user@domain.com";
+$Alias = "newalias@domain.com";
+Set-Mailbox $User -EmailAddresses @{add=$Alias};
+Set-Mailbox $User -EmailAddresses @{remove=$Alias};
 
 
 <# Add multiple aliases from a CSV into a specified mailbox. #>
