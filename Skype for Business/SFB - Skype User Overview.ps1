@@ -6,7 +6,9 @@
 
 <# QUICKRUN: Install the Teams module and connect to SFBO. #>
 $Tenant = "mytenant";
-Install-Module MicrosoftTeams -Force -Confirm:$false;
+#Set-ExecutionPolicy RemoteSigned;
+#Install-Module MicrosoftTeams -Force -Confirm:$false;
+Import-Module MicrosoftTeams;
 $Session_Sfb = New-CsOnlineSession -OverrideAdminDomain "$Tenant.onmicrosoft.com";
 Import-PSSession $Session_Sfb;
 
