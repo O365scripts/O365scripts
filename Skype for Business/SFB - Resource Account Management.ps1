@@ -33,14 +33,14 @@ Import-PSSession $session_sfb;
 $upn = "aa@domain.com";
 $display = "Auto Attendant Resource Account";
 $id_aa = "ce933385-9390-45d1-9512-c8d228074e07";
-New-CsOnlineApplicationInstance -ApplicationId $id_aa -UserPrincipalName $upn -DisplayName $display;
+New-CsOnlineApplicationInstance -Identity $upn -ApplicationId $id_aa -DisplayName $display;
 
 
 <# Create a call queue resource account. #>
 $upn = "cq@domain.com";
 $display = "Call Queue Resource Account";
 $id_cq = "11cd3e2e-fccb-42ad-ad00-878b93575e07";
-New-CsOnlineApplicationInstance -ApplicationId $id_cq -UserPrincipalName $upn -DisplayName $display;
+New-CsOnlineApplicationInstance -Identity $upn -ApplicationId $id_cq -DisplayName $display;
 
 
 <# Select an unassigned service number and assign it to the selected resource account. #>
@@ -52,7 +52,7 @@ Set-CsOnlineApplicationEndpoint -Uri "sip:$user" -PhoneNumber $number;
 <# Assign an hybrid number to a resource account. #>
 $User = "resource@domain.com";
 $Number = "+11231231234";
-Set-CsOnlineApplicationInstance -UserPrincipalName $User -OnpremPhoneNumber $Number;
+Set-CsOnlineApplicationInstance -Identity $User -OnpremPhoneNumber $Number;
 
 
 <# Select a resource account to be associated with a selected attendant. #>
