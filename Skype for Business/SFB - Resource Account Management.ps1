@@ -48,6 +48,10 @@ $number = (Get-CsOnlineTelephoneNumber -InventoryType Service -IsNotAssigned | O
 $user = (Get-CsOnlineApplicationInstance | Out-GridView -OutputMode Single).UserPrincipalName;
 Set-CsOnlineApplicationEndpoint -Uri "sip:$user" -PhoneNumber $number;
 
+<# Assign a toll-free number to a resource account. #>
+$User = "resource@domain.com";
+$Number = "+18001234567";
+Set-CsOnlineApplicationEndpoint -Uri "sip:$User" -PhoneNumber $Number;
 
 <# Assign an hybrid number to a resource account. #>
 $User = "resource@domain.com";
