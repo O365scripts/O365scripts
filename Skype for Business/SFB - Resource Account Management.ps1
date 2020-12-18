@@ -22,11 +22,13 @@ https://docs.microsoft.com/en-us/powershell/module/skype/new-csonlineapplication
 https://docs.microsoft.com/en-us/powershell/module/skype/set-csonlineapplicationinstance?view=skype-ps
 #>
 
-<# Connect to Skype for Business Online. #>
-$me = "admin@domain.onmicrosoft.com";
-Import-Module SkypeOnlineConnector;
-$session_sfb = New-CsOnlineSession -UserName $me;
-Import-PSSession $session_sfb;
+<# QUICKRUN: Install the Teams module and connect to SFBO. #>
+$Tenant = "mytenant";
+#Set-ExecutionPolicy RemoteSigned;
+#Install-Module MicrosoftTeams -Force -Confirm:$false;
+Import-Module MicrosoftTeams;
+$Session_Sfb = New-CsOnlineSession -OverrideAdminDomain "$Tenant.onmicrosoft.com";
+Import-PSSession $Session_Sfb;
 
 
 <# Create an auto-attendant resource account. #>
