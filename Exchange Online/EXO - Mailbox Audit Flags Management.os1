@@ -1,0 +1,23 @@
+<#
+.SYNOPSIS
+.NOTES
+.LINK
+https://docs.microsoft.com/en-us/powershell/module/exchange/set-mailbox?view=exchange-ps
+#>
+
+<# Enable all audit flags on a specific mailbox. #>
+$User = "";
+$AuditOwnerFlags = @{Add="AddFolderPermissions", "ApplyRecord", "Create", "HardDelete", "MailboxLogin", "ModifyFolderPermissions", "Move", "MoveToDeletedItems", "RecordDelete", "RemoveFolderPermissions", "SoftDelete", "Update", "UpdateFolderPermissions", "UpdateCalendarDelegation", "UpdateInboxRules"}
+$AuditAdminFlags = @{Add="AddFolderPermissions", "ApplyRecord", "Copy", "Create", "HardDelete", "ModifyFolderPermissions", "Move", "MoveToDeletedItems", "RecordDelete", "RemoveFolderPermissions", "SendAs", "SendOnBehalf", "SoftDelete", "Update", "UpdateFolderPermissions", "UpdateCalendarDelegation", "UpdateInboxRules"}
+$AuditDelegateFlags = @{Add="AddFolderPermissions", "ApplyRecord", "Create", "HardDelete", "ModifyFolderPermissions", "Move", "MoveToDeletedItems", "RecordDelete", "RemoveFolderPermissions", "SendAs", "SendOnBehalf", "SoftDelete", "Update", "UpdateFolderPermissions", "UpdateInboxRules"}
+Set-Mailbox -Identity $User -AuditEnabled $true -AuditAdmin $AuditAdminFlags -AuditDelegate $AuditDelegateFlags -AuditOwner $AuditOwnerFlags;
+
+<# Enable all audit flags on all user mailboxes. #>
+$ListMailbox = Get-Mailbox -RecipientTypeDetails UserMailbox -ResultSize Unlimited;
+$ListMailbox | % {
+	Write-Host -NoNewline "Enabling all audit flags on "; Write-Host -Fore Yellow $_.PrimarySmtpAddress;
+	Set-Mailbox -Identity $_.DistinguishedName `
+	-AuditOwner @{Add="AddFolderPermissions", "ApplyRecord", "Create", "HardDelete", "MailboxLogin", "ModifyFolderPermissions", "Move", "MoveToDeletedItems", "RecordDelete", "RemoveFolderPermissions", "SoftDelete", "Update", "UpdateFolderPermissions", "UpdateCalendarDelegation", "UpdateInboxRules"} `
+	-AuditAdmin @{Add="AddFolderPermissions", "ApplyRecord", "Copy", "Create", "HardDelete", "ModifyFolderPermissions", "Move", "MoveToDeletedItems", "RecordDelete", "RemoveFolderPermissions", "SendAs", "SendOnBehalf", "SoftDelete", "Update", "UpdateFolderPermissions", "UpdateCalendarDelegation", "UpdateInboxRules"} `
+	-AuditDelegate @{Add="AddFolderPermissions", "ApplyRecord", "Create", "HardDelete", "ModifyFolderPermissions", "Move", "MoveToDeletedItems", "RecordDelete", "RemoveFolderPermissions", "SendAs", "SendOnBehalf", "SoftDelete", "Update", "UpdateFolderPermissions", "UpdateInboxRules"} `
+	-AuditEnabled $true};
