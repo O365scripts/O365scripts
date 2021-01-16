@@ -17,5 +17,14 @@ https://github.com/O365scripts/O365scripts
  * Office Deployment Tool [Download](https://go.microsoft.com/fwlink/p/?LinkID=626065) / [Config](https://config.office.com/deploymentsettings) / [Overview](https://docs.microsoft.com/en-us/deployoffice/overview-office-deployment-tool)
  * Admin Center [Help](https://docs.microsoft.com/en-us/microsoft-365/admin/?view=o365-worldwide)
 
-#### Disclaimer
-The scripts are provided as is without any warranties so use at your own risk.
+#### Issues
+
+#### Contribution
+
+#### License
+
+#### Legal Disclaimer
+Use this software at your own risk. This software comes with no warranty, either express or implied.
+I assume no liability for the use or misuse of this software or its derivatives.
+This software is offered "as-is". I will not install, remove, operate or support this software at your request.
+If you are unsure of how this software will interact with your system, do not use it.
