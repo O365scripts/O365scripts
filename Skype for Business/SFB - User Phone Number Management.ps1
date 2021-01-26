@@ -18,13 +18,15 @@ Import-Module MicrosoftTeams;
 $Session_Sfb = New-CsOnlineSession -OverrideAdminDomain "$Tenant.onmicrosoft.com";
 Import-PSSession $Session_Sfb;
 
+<# Specify manually which number to assign to a specific user. #>
+$user = "";
+$number = "+###########";
+Set-CsOnlineVoiceUser -Identity $user -TelephoneNumber $number;
 
 <# Specify manually which number and emergency location ID to assign to a specific user. #>
 $user = "";
-$number = "";
-#$number = "+###########";
-$location = "";
-#$location = "12345678-1234-1234-1234-123412345678";
+$number = "+1234567890";
+$location = "12345678-1234-1234-1234-123412345678";
 Set-CsOnlineVoiceUser -Identity $user -TelephoneNumber $number -LocationID $location;
 
 
