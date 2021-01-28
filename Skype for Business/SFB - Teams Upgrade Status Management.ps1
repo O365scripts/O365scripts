@@ -15,7 +15,6 @@ Import-Module MicrosoftTeams;
 $Session_Sfb = New-CsOnlineSession -OverrideAdminDomain "$Tenant.onmicrosoft.com";
 Import-PSSession $Session_Sfb -AllowClobber;
 
-
 <# Upgrade Tenant to Teams. #>
 Grant-CsTeamsUpgradePolicy -PolicyName "UpgradeToTeams" -Global;
 
@@ -26,14 +25,11 @@ Get-CsTeamsUpgradeStatus
 $User = "";
 Grant-CsTeamsUpgradePolicy -PolicyName "UpgradeToTeams" -Identity $User;
 
-
 <# Confirm the current Upgrade mode on a specific user. #>
 Get-CsOnlineUser -Identity $User | select UserPrincipalName,TeamsUpgradeEffectiveMode;
 
-
 <# Upgrade all users to Teams. #>
 Get-CsOnlineUser | % {Grant-CsTeamsUpgradePolicy -Identity $_.Identity -PolicyName "UpgradeToTeams" -ErrorAction SilentlyContinue;}
-
 
 <# Interactive selection of the Upgrade mode to assign on all users. #>
 $ListTeamUpgradeModes = ("Islands","Allows a single user to evaluate both clients side by side. Chats and calls can land in either client, so users must always run both clients.","IslandsWithNotify","SfBOnly","SfBOnlyWithNotify","SfBOnlyWithNotify","SfBWithTeamsCollabWithNotify","SfBWithTeamsCollabAndMeetings","SfBWithTeamsCollabAndMeetingsWithNotify","Global";
