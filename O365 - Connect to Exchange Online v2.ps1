@@ -3,11 +3,11 @@
 Connect to Exchange Online v2 PowerShell.
 
 .NOTES
-  > The EXO V2 module uses Modern authentication for all cmdlets.
-  > You can't use Basic authentication in the EXO V2 module; however, you still need to configure the Basic authentication setting in WinRM.
-  > The latest version of PowerShell that's currently supported for the EXO V2 module is PowerShell 5.1.
-  > Support for PowerShell 6.0 or later is currently a work in progress and will be released soon.
-  > This also implies that EXO PowerShell V2 module won't work in Linux or Mac as of now.
+	> The EXO V2 module uses Modern authentication for all cmdlets.
+	> You can't use Basic authentication in the EXO V2 module; however, you still need to configure the Basic authentication setting in WinRM.
+	> The latest version of PowerShell that's currently supported for the EXO V2 module is PowerShell 5.1.
+	> Support for PowerShell 6.0 or later is currently a work in progress and will be released soon.
+	> This also implies that EXO PowerShell V2 module won't work in Linux or Mac as of now.
 
 .LINK
 https://docs.microsoft.com/en-us/powershell/exchange/exchange-online/exchange-online-powershell-v2/exchange-online-powershell-v2?view=exchange-ps
@@ -18,15 +18,14 @@ https://docs.microsoft.com/en-us/powershell/module/exchange/disconnect-exchangeo
 
 <# QUICKRUN: Install and Connect to EXO v2. #>
 $Me = "admin@tenantname.onmicrosoft.com";
-Set-ExecutionPolicy RemoteSigned;
-Install-Module ExchangeOnlineManagement -Confirm:$false;
+#Set-ExecutionPolicy RemoteSigned;
+#Install-Module ExchangeOnlineManagement -Confirm:$false;
 Import-Module ExchangeOnlineManagement;
 Connect-ExchangeOnline -UserPrincipalName $me;
 
 <# Connect to EXO v2. #>
 $Me = "";
 Connect-ExchangeOnline -UserPrincipalName $Me;
-
 
 <# Connect to EXO v2 using stored credentials. #>
 $Me = "";
@@ -47,10 +46,7 @@ Connect-ExchangeOnline -UserPrincipalName $Me -EnableErrorReporting -LogLevel Al
 #Disconnect-ExchangeOnline -Confirm:$false;
 
 
-
-<#
-INSTALLATION / TROUBLESHOOTING
-#>
+<# INSTALLATION / TROUBLESHOOTING #>
 
 <# Install EXO v2 module as administrator. #>
 #Install-Module ExchangeOnlineManagement -Confirm:$false;
@@ -65,10 +61,7 @@ INSTALLATION / TROUBLESHOOTING
 #Install-Module PowerShellGet -Force -Confirm:$false;
 
 
-
-<#
-UNATTENDED CONNECTIONS
-#>
+<# UNATTENDED CONNECTIONS #>
 
 <# Connect to EXO v2 using a public key certificate. #>
 $Tenant = "tenantname"; $AppId = "";
