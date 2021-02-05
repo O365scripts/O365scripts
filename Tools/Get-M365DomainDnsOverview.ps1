@@ -14,9 +14,6 @@ Get-M365DomainDnsOverview "microsoft.com";
 Get-M365DomainDnsOverview "hotmail.com" -OutputMode File;
 #>
 
-function Get-Timestamp {Get-Date -Format "yyyyMMddHHmmss"}
-
-
 function Get-M365DomainDnsOverview {
 	[CmdletBinding()] Param ($Domain=$null, $OutputMode="List");
 	Begin {
@@ -69,7 +66,7 @@ function Get-M365DomainDnsOverview {
 				Write-Host -Fore Green "DNS results";
 				$Report; # | Format-List;
 			}
-			if ($OutputMode -eq "File") {$Report | Out-File -FilePath "$PathOut\Get-M365DomainDnsOverview_$((Get-Timestamp)).txt" -Encoding utf8;}
+			if ($OutputMode -eq "File") {$Report | Out-File -FilePath "$PathOut\Get-M365DomainDnsOverview_$((Get-Date -Format "yyyyMMddHHmmss")).txt" -Encoding utf8;}
 		}
 		else {Write-Host -Fore Yellow "Nothing to lookup, closing.";}
 	}
