@@ -15,6 +15,5 @@ Enable-CsOnlineDialInConferencingUser $User;
 
 <# Export CsOnlineUser and ConferencingUser details of a specific user. #>
 $User = "user@domain.com";
-$UserOut = $User.Replace("@","_");
-Get-CsOnlineUser -Identity $User -ErrorAction SilentlyContinue | Out-File -Encoding utf8 -FilePath "$env:USERPROFILE\Desktop\Get-CsOnlineUser__$($User.Replace("@","_"))_$Stamp.txt";
-Get-CsOnlineDialInConferencingUser -Identity $User -ErrorAction SilentlyContinue | Out-File -FilePath "$env:USERPROFILE\Desktop\Get-CsOnlineDialInConferencingUser__$($User.Replace("@","_"))_$Stamp.txt";
+Get-CsOnlineUser -Identity $User -ErrorAction SilentlyContinue | Out-File -Encoding utf8 -FilePath "$env:USERPROFILE\Desktop\Get-CsOnlineUser_$Stamp.txt";
+Get-CsOnlineDialInConferencingUser -Identity $User -ErrorAction SilentlyContinue | Out-File -FilePath "$env:USERPROFILE\Desktop\Get-CsOnlineDialInConferencingUser_$Stamp.txt";
