@@ -50,12 +50,16 @@ $number = (Get-CsOnlineTelephoneNumber -InventoryType Service -IsNotAssigned | O
 $user = (Get-CsOnlineApplicationInstance | Out-GridView -OutputMode Single).UserPrincipalName;
 Set-CsOnlineApplicationEndpoint -Uri "sip:$user" -PhoneNumber $number;
 
+<# Unassign a number from a resource account. #>
+$User = "resource@domain.com";
+Set-CsOnlineApplicationInstance -Identity "sip:$User" -PhoneNumber $null;
+
 <# Assign a toll number to a resource account. #>
 $User = "resource@domain.com";
 $Number = "+1234567890";
 Set-CsOnlineApplicationEndpoint -Uri "sip:$User" -PhoneNumber $Number;
 
-<# Assign a toll-free number to a resource account. #>
+<# Assign a toll-free number to a resource account. Make sure to have communication credits for it. #>
 $User = "resource@domain.com";
 $Number = "+18001234567";
 Set-CsOnlineApplicationEndpoint -Uri "sip:$User" -PhoneNumber $Number;
