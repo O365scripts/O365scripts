@@ -52,7 +52,7 @@ Set-CsOnlineApplicationEndpoint -Uri "sip:$user" -PhoneNumber $number;
 
 <# Unassign a number from a resource account. #>
 $User = "resource@domain.com";
-Set-CsOnlineApplicationInstance -Identity "sip:$User" -PhoneNumber $null;
+Set-CsOnlineApplicationEndpoint -Identity "sip:$User" -PhoneNumber "";
 
 <# Assign a toll number to a resource account. #>
 $User = "resource@domain.com";
