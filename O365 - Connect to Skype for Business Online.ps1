@@ -18,12 +18,25 @@ https://www.microsoft.com/en-us/download/details.aspx?id=39366
 https://docs.microsoft.com/en-us/SkypeForBusiness/set-up-your-computer-for-windows-powershell/download-and-install-the-skype-for-business-online-connector
 #>
 
+
+<# Connect to SFBO using the previous Teams module version.
+Verify if the the v2.0 Teams module is present and uninstall it if present.
+Make sure to restart PS if you do need to uninstall it.
+Install the previous 1.1.6 version since the 2.0 does not have the New-CsOnlineSession command and then connect.
+#>
+Get-Module MicrosoftTeams -ListAvailable | Select Version;
+Uninstall-Module MicrosoftTeams -AllVersions;
+Install-Module MicrosoftTeams -RequiredVersion 1.1.6
+Import-Module MicrosoftTeams;
+$Session_Sfb = New-CsOnlineSession -OverrideAdminDomain "contoso.onmicrosoft.com";
+Import-PSSession $Session_Sfb;
+
+
 <# QUICKRUN: Install the Teams module and connect to SFBO. #>
-$Tenant = "mytenant";
 #Set-ExecutionPolicy RemoteSigned;
 #Install-Module MicrosoftTeams -Force -Confirm:$false;
 Import-Module MicrosoftTeams;
-$Session_Sfb = New-CsOnlineSession -OverrideAdminDomain "$Tenant.onmicrosoft.com";
+$Session_Sfb = New-CsOnlineSession -OverrideAdminDomain "contoso.onmicrosoft.com";
 Import-PSSession $Session_Sfb;
 
 
