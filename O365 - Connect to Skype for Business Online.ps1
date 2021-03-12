@@ -20,7 +20,7 @@ https://docs.microsoft.com/en-us/SkypeForBusiness/set-up-your-computer-for-windo
 
 
 <# Connect to SFBO using the previous Teams module version.
-Verify if the the v2.0 Teams module is present and uninstall it if present.
+Verify if the the v2.0 Teams module is present and uninstall it if necessary.
 Make sure to restart PS if you do need to uninstall it.
 Install the previous 1.1.6 version since the 2.0 does not have the New-CsOnlineSession command and then connect.
 #>
