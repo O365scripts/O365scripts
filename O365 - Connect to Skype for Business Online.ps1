@@ -25,9 +25,9 @@ Make sure to restart PS if you do need to uninstall it.
 Install the previous 1.1.6 version since the 2.0 does not have the New-CsOnlineSession command and then connect.
 #>
 Get-Module MicrosoftTeams -ListAvailable | Select Version;
-Uninstall-Module MicrosoftTeams -AllVersions;
-Install-Module MicrosoftTeams -RequiredVersion 1.1.6
-Import-Module MicrosoftTeams;
+#Uninstall-Module MicrosoftTeams -AllVersions;
+#Install-Module MicrosoftTeams -RequiredVersion 1.1.6;
+Import-Module MicrosoftTeams -RequiredVersion 1.1.6;
 $Session_Sfb = New-CsOnlineSession -OverrideAdminDomain "contoso.onmicrosoft.com";
 Import-PSSession $Session_Sfb;
 
