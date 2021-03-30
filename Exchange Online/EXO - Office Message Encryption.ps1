@@ -1,7 +1,14 @@
 <#
 .SYNOPSIS
+Office Message Encryption Management
+https://github.com/O365scripts/O365scripts/blob/master/Exchange%20Online/EXO%20-%20Office%20Message%20Encryption.ps1
 .NOTES
 .LINK
+https://docs.microsoft.com/en-us/powershell/module/exchange/set-irmconfiguration?view=exchange-ps
+https://docs.microsoft.com/en-us/powershell/module/exchange/get-irmconfiguration?view=exchange-ps
+https://docs.microsoft.com/en-us/azure/information-protection/install-powershell
+https://docs.microsoft.com/en-us/powershell/module/aipservice/enable-aipservice?view=azureipps
+https://docs.microsoft.com/en-us/powershell/module/aipservice/get-aipservice?view=azureipps
 #>
 
 <# Confirm which modules are installed? #>
@@ -54,3 +61,14 @@ Set-IRMConfiguration -LicensingLocation $List;
 Write-Host -Fore Yellow "Enabling Azure RMS and Internal Licensing.";
 Set-IRMConfiguration -AzureRMSLicensingEnabled $true -InternalLicensingEnabled $true;
 Set-IRMConfiguration -SimplifiedClientAccessEnabled $true;
+
+######################
+
+<# Use this if you want to toggle off v1 and v2 but only reenable v1. #>
+Write-Host -Fore Yellow "Disable OME v1 and enable OME v2.";
+Set-IRMConfiguration -AzureRMSLicensingEnabled $false -InternalLicensingEnabled $False -RMSOnlineKeySharingLocation $null -Force -Confirm:$false;
+Set-IRMConfiguration -AzureRMSLicensingEnabled $true -InternalLicensingEnabled $true;
+
+<# Enable the Protect button as well as use of the Encrypt and DNF templates in OWA. #>
+Write-Host -Fore Yellow "Enable the Protect, Encrypt, Do Not Forward buttons and the DNF template in OWA.";
+Set-IRMConfiguration -SimplifiedClientAccessEnabled $true -SimplifiedClientAccessEncryptOnlyDisabled $false -SimplifiedClientAccessDoNotForwardDisabled $false;
