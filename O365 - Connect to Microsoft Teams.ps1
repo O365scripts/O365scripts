@@ -25,8 +25,8 @@ Connect-MicrosoftTeams -Credential $Creds;
 <#$creds = $null;#>
 
 <# Connect to Teams without MFA enabled and without caching credentials. #>
-$me = "admin@domain.com";
-Connect-MicrosoftTeams -Credential (Get-Credential -Message "Login:" -UserName $me);
+$AdminUpn = "admin@domain.com";
+Connect-MicrosoftTeams -Credential (Get-Credential -Message "Login:" -UserName $AdminUpn);
 
 
 <# Confirm Teams module version(s) installed. #>
