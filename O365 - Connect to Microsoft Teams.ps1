@@ -1,11 +1,13 @@
 <#
 .SYNOPSIS
 Connect to Microsoft Teams PowerShell
+
 .NOTES
- > The recent Teams module versio
- > You will need to specify the -TeamsEnvironmentName when connecting to a GCC High or a DOD tenant (TeamsGCCH or TeamsDOD).
- > Use the TenantId attribute when connecting to a different tenant.
- > Use the -LogFilePath and -LogLevel when reporting bugs.
+The recent Teams module versions contains commands for both Teams and SFBO.
+You will need to specify the -TeamsEnvironmentName when connecting to a GCC High or a DOD tenant (TeamsGCCH or TeamsDOD).
+Use the TenantId attribute when connecting to a different tenant.
+Use the -LogFilePath and -LogLevel when reporting bugs.
+
 .LINK
 https://www.powershellgallery.com/packages/MicrosoftTeams/
 https://docs.microsoft.com/en-us/powershell/module/teams/connect-microsoftteams?view=teams-ps
