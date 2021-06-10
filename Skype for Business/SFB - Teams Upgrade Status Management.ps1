@@ -50,8 +50,8 @@ Get-CsOnlineUser | % {Grant-CsTeamsUpgradePolicy -Identity $_.Identity -PolicyNa
 <# Change the upgrade status on all users not currently upgraded. #>
 $ListUserNotUpgraded = Get-CsOnlineUser | Where {$_.TeamsUpgradeEffectiveMode -ne "TeamsOnly"};
 $ListUserNotUpgraded | % {Grant-CsTeamsUpgradePolicy -Identity $_.Identity -PolicyName UpgradeToTeams -ErrorAction SilentlyContinue;}
-#$ListUserNotUpgraded | Export-Csv "CsOnlineUserNotUpgradedToTeams.csv" -Encoding utf8 -NoTypeInformation;
-
+$ListUserNotUpgraded | Export-Csv "CsOnlineUserNotUpgradedToTeams.csv" -Encoding utf8 -NoTypeInformation;
+$ListUserNotUpgraded % {Grant-CsTeamsUpgradePolicy -Identity $_.Identity -PolicyName "UpgradeToTeams" -ErrorAction SilentlyContinue;}
 
 <# Confirm the current Upgrade mode of all individual users. #>
 $ListUser = Get-CsOnlineUser | select UserPrincipalName,TeamsUpgradeEffectiveMode;
