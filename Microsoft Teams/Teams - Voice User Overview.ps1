@@ -3,7 +3,7 @@
 Get Teams Voice User Overview Details
 https://github.com/O365scripts/O365scripts/blob/master/Microsoft%20Teams/Teams%20-%20Voice%20User%20Overview.ps1
 .NOTES
-+CsOnlineApplicationInstance/Endpoint should fail normally unless the $User is a Resource Account for some reason.
+	> Get-CsOnlineApplicationInstance/Endpoint should normally fail unless the $User is also a Resource Account.
 .LINK
 Reference:
 https://docs.microsoft.com/en-us/powershell/module/skype/get-csonlineuser?view=skype-ps
@@ -22,35 +22,27 @@ Connect-MicrosoftTeams;
 <# Prevent output truncation... #>
 $FormatEnumerationLimit = -1;
 
-
 <# Display Teams Voice User Overview. #>
 $User = "";
 Get-CsOnlineUser -Identity $User | Select *;
 Get-CsOnlineVoiceUser -Identity $User;
 Get-CsOnlineDialInConferencingUser -Identity $User;
-Get-CsOnlineApplicationInstance -Identity $User -ErrorAction SilentlyContinue;
-Get-CsOnlineApplicationEndpoint -Uri $User -ErrorAction SilentlyContinue;
+#Get-CsOnlineApplicationInstance -Identity $User -ErrorAction SilentlyContinue;
+#Get-CsOnlineApplicationEndpoint -Uri $User -ErrorAction SilentlyContinue;
 # </TeamsVoiceUserOverview>
 
-
-<# Export Teams Voice User Overview and compress to zip archive. #>
+<# Get Teams Voice User Overview and send compressed output to zip. #>
 $User = "";
+$Encoding = "utf8";
 $Stamp = Get-Date -Format "yyyyMMddHHmmss"; $PathOut = "$env:TEMP\TeamsVoiceUserOverview_$Stamp";
-$PathExportFile = "$env:USERPROFILE\Desktop\M365-TeamsVoiceUserOverview_$Stamp.zip";
-New-Item $PathOut -ItemType Directory;
-#$CsUser = Get-CsUser -Identity $User -ErrorAction SilentlyContinue;
-#if ($CsUser) {$CsUser | Out-File -Encoding utf8 -FilePath "$PathOut\Get-CsUser.txt";}
-$CsOnlineUser = Get-CsOnlineUser -Identity $User -ErrorAction SilentlyContinue;
-if ($CsOnlineUser) {$CsOnlineUser | Out-File -Encoding utf8 -FilePath "$PathOut\Get-CsOnlineUser.txt";}
-$CsOnlineVoiceUser = Get-CsOnlineVoiceUser -Identity $User -ErrorAction SilentlyContinue;
-if ($CsOnlineVoiceUser) {$CsOnlineVoiceUser | Out-File -Encoding utf8 -FilePath "$PathOut\Get-CsOnlineVoiceUser.txt";}
-$CsOnlineDialInConferencingUser = Get-CsOnlineDialInConferencingUser -Identity $User -ErrorAction SilentlyContinue
-if ($CsOnlineDialInConferencingUser) {$CsOnlineDialInConferencingUser | Out-File -Encoding utf8 -FilePath "$PathOut\Get-CsOnlineDialInConferencingUser.txt";}
-$CsOnlineApplicationInstance = Get-CsOnlineApplicationInstance -Identity $User -ErrorAction SilentlyContinue;
-if ($CsOnlineApplicationInstance) {$CsOnlineApplicationInstance | Out-File -Encoding utf8 -FilePath "$PathOut\Get-CsOnlineApplicationInstance.txt";}
-$CsOnlineApplicationEndpoint = Get-CsOnlineApplicationEndpoint -Uri $User -ErrorAction SilentlyContinue;
-if ($CsOnlineApplicationEndpoint) {$CsOnlineApplicationEndpoint | Out-File -Encoding utf8 -FilePath "$PathOut\Get-CsOnlineApplicationEndpoint.txt";}
-Compress-Archive -DestinationPath $PathExportFile -Path "$PathOut\*";
+$PathExport = "$env:USERPROFILE\Downloads"; $PathExportFile = "$PathExport\M365-TeamsVoiceUserOverview_$Stamp.zip";
+New-Item $PathOut -ItemType Directory | Out-Null;
+$CsOnlineUser = Get-CsOnlineUser -Identity $User -ErrorAction SilentlyContinue; if ($CsOnlineUser) {$CsOnlineUser | Out-File "$PathOut\Get-CsOnlineUser.txt" -Encoding $Encoding};
+$CsOnlineVoiceUser = Get-CsOnlineVoiceUser -Identity $User -ErrorAction SilentlyContinue; if ($CsOnlineVoiceUser) {$CsOnlineVoiceUser | Out-File "$PathOut\Get-CsOnlineVoiceUser.txt" -Encoding $Encoding};
+$CsOnlineDialInConferencingUser = Get-CsOnlineDialInConferencingUser -Identity $User -ErrorAction SilentlyContinue; if ($CsOnlineDialInConferencingUser) {$CsOnlineDialInConferencingUser | Out-File "$PathOut\Get-CsOnlineDialInConferencingUser.txt" -Encoding $Encoding};
+#$CsOnlineApplicationInstance = Get-CsOnlineApplicationInstance -Identity $User -ErrorAction SilentlyContinue; if ($CsOnlineApplicationInstance) {$CsOnlineApplicationInstance | Out-File "$PathOut\Get-CsOnlineApplicationInstance.txt" -Encoding $Encoding};
+#$CsOnlineApplicationEndpoint = Get-CsOnlineApplicationEndpoint -Uri $User -ErrorAction SilentlyContinue; if ($CsOnlineApplicationEndpoint) {$CsOnlineApplicationEndpoint | Out-File "$PathOut\Get-CsOnlineApplicationEndpoint.txt" -Encoding $Encoding};
+Compress-Archive -Path "$PathOut\*" -DestinationPath $PathExportFile;
 Remove-Item $PathOut -Recurse -Force -Confirm:$false;
 explorer "/select,$PathExportFile";
 <# </TeamsVoiceUserOverviewExport> #>

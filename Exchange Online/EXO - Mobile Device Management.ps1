@@ -1,13 +1,17 @@
 <#
 .SYNOPSIS
 Exchange Online Mobile Device Management
-
 .NOTES
-
 .LINK
 https://support.microsoft.com/en-us/help/3013802/exchange-activesync-device-is-blocked-unexpectedly-by-abq-list
 https://support.microsoft.com/en-us/help/3193518/exchange-online-users-who-use-outlook-for-ios-and-android-and-device-a
 #>
+
+<# Connect to EXO v2. #>
+#Set-ExecutionPolicy RemoteSigned -Force -Confirm:$false;
+#Install-Module ExchangeOnlineManagement -AllowClobber -Force -Confirm:$false;
+$AdminUpn = "";
+Connect-ExchangeOnline -UserPrincipalName $AdminUpn;
 
 <# Empty the list of allowed/blocked mobile devices. #>
 $mbox = "";

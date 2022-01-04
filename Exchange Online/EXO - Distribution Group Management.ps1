@@ -1,9 +1,15 @@
 <#
 .SYNOPSIS
+(link)
 .NOTES
 .LINK
 #>
 
+<# Connect to EXO v2. #>
+#Set-ExecutionPolicy RemoteSigned -Force -Confirm:$false;
+#Install-Module ExchangeOnlineManagement -AllowClobber -Force -Confirm:$false;
+$AdminUpn = "";
+Connect-ExchangeOnline -UserPrincipalName $AdminUpn;
 
 <# Full Distribution Group Membership Overview. #>
 $report = @();

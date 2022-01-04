@@ -1,6 +1,16 @@
 <#
+.SYNOPSIS
+.NOTES
+.LINK
 #>
 
+<# Connect to EXO v2. #>
+#Set-ExecutionPolicy RemoteSigned -Force -Confirm:$false;
+#Install-Module ExchangeOnlineManagement -AllowClobber -Force -Confirm:$false;
+$AdminUpn = "";
+Connect-ExchangeOnline -UserPrincipalName $AdminUpn;
+
+<# #>
 $role = "CustomMyBaseOptions";
 New-ManagementRole -Name $role -Parent MyBaseOptions
 

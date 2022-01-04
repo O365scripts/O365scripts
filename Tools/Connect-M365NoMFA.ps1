@@ -2,13 +2,13 @@
 .SYNOPSIS
 Connect to different M365 services using an admin without multi-factor authentication enabled.
 .NOTES
-Please note that is highly recommended for admins to have MFA enabled for security measures.
-Refer to the following page if you need to install modules before connecting: <url>
-Note that is not possible to connect to EXO v2 and Security & Compliance at the same time as connecting to one will simply disconnect the other.
+	> Please note that is highly recommended for admins to have MFA enabled for security measures.
+	> Refer to the following page if you need to install modules before connecting: <url>
+	> Note that is not possible to connect to EXO v2 and Security & Compliance at the same time since connecting to one will simply disconnect the other.
 .LINK
 #>
 
-<# Login? #>
+<# Connection options. #>
 $AdminUpn = "admin@domain.com";
 $Tenant = "contoso";
 $Creds = Get-Credential -Message "Login" -UserName $AdminUpn;

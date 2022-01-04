@@ -7,6 +7,12 @@ https://docs.microsoft.com/en-us/powershell/module/exchange/get-mailboxjunkemail
 https://docs.microsoft.com/en-us/powershell/module/exchange/set-mailboxjunkemailconfiguration?view=exchange-ps
 #>
 
+<# Connect to EXO v2. #>
+#Set-ExecutionPolicy RemoteSigned -Force -Confirm:$false;
+#Install-Module ExchangeOnlineManagement -AllowClobber -Force -Confirm:$false;
+$AdminUpn = "";
+Connect-ExchangeOnline -UserPrincipalName $AdminUpn;
+
 <# Add/remove a trusted sender on all mailboxes that do not already contain it. #>
 $TrustedSender = "user@domain.com"
 $ListMailbox = Get-Mailbox -ResultSize Unlimited | Select DisplayName,PrimarySmtpAddress,RecipientTypeDetails,DistinguishedName,@{Name="TrustedSendersAndDomains";Expression={(Get-MailboxJunkEmailConfiguration -Identity $_.DistinguishedName -ErrorAction SilentlyContinue).TrustedSendersAndDomains}};

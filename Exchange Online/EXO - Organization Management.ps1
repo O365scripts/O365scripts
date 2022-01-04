@@ -1,4 +1,6 @@
 <#
+.SYNOPSIS
+(link)
 .NOTES
 .LINK
 https://docs.microsoft.com/en-us/powershell/module/exchange/organization/enable-organizationcustomization?view=exchange-ps
@@ -7,12 +9,11 @@ https://docs.microsoft.com/en-us/powershell/module/exchange/set-organizationconf
 https://docs.microsoft.com/en-us/microsoft-365/compliance/enable-unlimited-archiving?view=o365-worldwide
 #>
 
-<# QUICKRUN: Install and Connect to EXO v2. #>
-$Me = "admin@tenantname.onmicrosoft.com";
-#Set-ExecutionPolicy RemoteSigned;
-Install-Module ExchangeOnlineManagement -Confirm:$false;
-Import-Module ExchangeOnlineManagement;
-Connect-ExchangeOnline -UserPrincipalName $Me;
+<# Connect to EXO v2. #>
+#Set-ExecutionPolicy RemoteSigned -Force -Confirm:$false;
+#Install-Module ExchangeOnlineManagement -AllowClobber -Force -Confirm:$false;
+$AdminUpn = "";
+Connect-ExchangeOnline -UserPrincipalName $AdminUpn;
 
 <# Hydrate tenant, one time only. #>
 Enable-OrganizationCustomization;
@@ -22,6 +23,3 @@ Set-OrganizationConfig -AutoExpandingArchive;
 
 <# Verify current organization configuration. #>
 Get-OrganizationConfig;
-
-<# Export Organization Configuration to file. #>
-Get-OrganizationConfig | Out-File -Encoding utf8 -FilePath "$env:USERPROFILE\Desktop\Get-OrganizationConfig_$(Get-Date -Format "yyyyMMddHHmmss).txt";

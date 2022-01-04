@@ -1,13 +1,12 @@
 <#
 .SYNOPSIS
 Quick connection to M365 PowerShell.
-
+https://github.com/O365scripts/O365scripts/blob/master/Tools/Connect-M365.ps1
 .NOTES
-This script does not validate the presence of any of the modules before connecting and assumes it's already installed.
+This script does not validate the presence of any of the modules before connecting and assume they are already installed.
 If you do need to install some of the modules you can refer to the following script: <link>
 Uncomment and adjust the connection options with your admin and tenant details before running.
-Adjust the connection options variable prior to running.
-
+Adjust the connection options and the modules needed prior to running.
 .LINK
 #>
 
@@ -23,9 +22,8 @@ if (!$AdminIsMfaEnabled) {$Creds = Get-Credential -Message "Login" -UserName $Ad
 $ConnectToMSOL	= 0;
 $ConnectToAAD	= 0;
 $ConnectToAz	= 0;
-$ConnectToEXO	= 0;
-$ConnectToSCC	= 0;
-$ConnectToSFBO	= 0;
+$ConnectToEXO	= 0; $ConnectToSCC = 0;
+#$ConnectToSFBO	= 0;
 $ConnectToTeams	= 0;
 $ConnectToSPO	= 0;
 $ConnectToPNP	= 0;
@@ -75,21 +73,19 @@ if ($ConnectToSCC) {
 	if (!$AdminIsMfaEnabled) {Connect-IPPSSession -UserPrincipalName $AdminUpn -Credential $Creds}
 	else {Connect-IPPSSession -UserPrincipalName $AdminUpn}
 }
-
-<# Skype for Business Online via specific Teams module version. #>
+<# [DEPRECATED] Skype for Business Online via specific Teams module version. #>
+<#
 if ($ConnectToSFBO) {
 	Import-Module MicrosoftTeams -RequiredVersion 1.1.6;
 	if (!$AdminIsMfaEnabled) {$Session_Sfb = New-CsOnlineSession -Credential $Creds -OverrideAdminDomain "${Tenant}.onmicrosoft.com"}
 	else {$Session_Sfb = New-CsOnlineSession -OverrideAdminDomain "${Tenant}.onmicrosoft.com"}
 	Import-PSSession $Session_Sfb;
-}
+} #>
 <# Teams #>
 if ($ConnectToTeams) {
 	Import-Module MicrosoftTeams;
-	if (!$AdminIsMfaEnabled) {Connect-MicrosoftTeams -AccountId $AdminUpn -Credential $Creds}
-	else {Connect-MicrosoftTeams -AccountId $AdminUpn}
+	Connect-MicrosoftTeams;
 }
-
 <# SPO #>
 if ($ConnectToSPO) {
 	Import-Module Microsoft.Online.SharePoint.PowerShell;

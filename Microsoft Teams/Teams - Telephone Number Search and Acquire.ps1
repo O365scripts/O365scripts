@@ -1,7 +1,7 @@
 <#
 .SYNOPSIS
 Teams Cloud Number Search and Acquire Management
-
+https://github.com/O365scripts/O365scripts/blob/master/Microsoft%20Teams/Teams%20-%20VTelephone%20Number%20Search%20and%20Acquire.ps1
 .NOTES
 Get-CsOnlineTelephoneNumberInventoryTypes:	Service, Subscriber, TollFree
 Get-CsOnlineTelephoneNumberInventoryRegions: NOAM, EMEA, APAC, LATAM
@@ -12,8 +12,8 @@ Search-CsOnlineTelephoneNumberInventory
 Select-CsOnlineTelephoneNumberInventory
 Get-CsOnlineTelephoneNumberReservationsInformation
 Clear-CsOnlineTelephoneNumberReservation
-
 .LINK
+Reference:
 https://docs.microsoft.com/en-us/powershell/module/skype/search-csonlinetelephonenumberinventory?view=skype-ps
 https://docs.microsoft.com/en-us/powershell/module/skype/select-csonlinetelephonenumberinventory?view=skype-ps
 https://docs.microsoft.com/en-us/powershell/module/skype/get-csonlinetelephonenumberinventoryregions?view=skype-ps
@@ -21,15 +21,11 @@ https://docs.microsoft.com/en-us/powershell/module/skype/get-csonlinetelephonenu
 https://docs.microsoft.com/en-us/powershell/module/skype/get-csonlinetelephonenumber?view=skype-ps
 #>
 
-<# QUICKRUN: Install the Teams module and connect to SFBO. #>
-$Tenant = "mytenant";
-#Set-ExecutionPolicy RemoteSigned;
-#Install-Module MicrosoftTeams -Force -Confirm:$false;
+<# Connect to Teams. #>
+#Set-ExecutionPolicy RemoteSigned -Force -Confirm:$false;
+#Install-Module MicrosoftTeams -AllowClobber -Force -Confirm:$false;
 Import-Module MicrosoftTeams;
-$Session_Sfb = New-CsOnlineSession -OverrideAdminDomain "$Tenant.onmicrosoft.com";
-Import-PSSession $Session_Sfb;
-
-
+Connect-MicrosoftTeams;
 
 <# How many numbers do you wish to acquire? #>
 $InvQuantity = 1;

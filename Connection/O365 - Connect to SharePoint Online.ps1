@@ -13,7 +13,6 @@ Connect-SPOService
 
 .LINK
 https://docs.microsoft.com/en-us/powershell/sharepoint/sharepoint-online/connect-sharepoint-online?view=sharepoint-ps
-https://www.microsoft.com/en-us/download/details.aspx?id=35588
 #>
 
 <# Install SharePoint Online module as administrator? #>

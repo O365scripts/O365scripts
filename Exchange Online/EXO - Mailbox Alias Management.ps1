@@ -1,32 +1,35 @@
 <#
 .SYNOPSIS
-Mailbox Alias Management
+Exchange Online Mailbox Alias Management
+(link)
 .NOTES
 .LINK
+Reference:
 https://docs.microsoft.com/en-us/exchange/recipients/user-mailboxes/email-addresses?view=exchserver-2019
 https://docs.microsoft.com/en-us/powershell/module/exchange/set-mailbox?view=exchange-ps
 https://docs.microsoft.com/en-us/powershell/module/exchange/get-mailbox?view=exchange-ps
 #>
 
-<# QUICKRUN: Install and Connect to EXO v2. #>
-$Me = "admin@tenantname.onmicrosoft.com";
-#Set-ExecutionPolicy RemoteSigned;
-Install-Module ExchangeOnlineManagement -Confirm:$false;
-Import-Module ExchangeOnlineManagement;
-Connect-ExchangeOnline -UserPrincipalName $me;
+<# Connect to EXO v2. #>
+#Set-ExecutionPolicy RemoteSigned -Force -Confirm:$false;
+#Install-Module ExchangeOnlineManagement -AllowClobber -Force -Confirm:$false;
+$AdminUpn = "";
+Connect-ExchangeOnline -UserPrincipalName $AdminUpn;
 
-
-<# Add or remove an alias on a specific mailbox.#>
+<# Add/remove a mailbox alias. #>
 $User = "user@domain.com";
-$Alias = "newalias@domain.com";
+$Alias = "alias@domain.com";
 Set-Mailbox $User -EmailAddresses @{add=$Alias};
 Set-Mailbox $User -EmailAddresses @{remove=$Alias};
 
-
-<# Add multiple aliases from a CSV into a specified mailbox. #>
-$User = "user@domain.com";
-$PathCsv = "$env:USERPROFILE\Desktop\BulkAddAliasesToMailbox.csv";
-Import-Csv $PathCsv | % {Set-Mailbox $User -EmailAddresses @{add=$_.SmtpAddress}};
-
 <# Verify aliases. #>
 (Get-Mailbox $User).EmailAddresses
+
+<# Add multiple mailbox aliases from CSV (Single column: SmtpAddress). #>
+$User = "user@domain.com";
+$PathCsv = "BulkAddMailboxAlias.csv";
+Import-Csv $PathCsv | % {Set-Mailbox $User -EmailAddresses @{add=$_.SmtpAddress}};
+
+<# Confirm which mailbox has a given alias. #>
+$Alias = "";
+Get-Recipient | Where {$_.EmailAddresses -match $Alias} | Select ExternalDirectoryObjectId,DisplayName,UserPrincipalName,EmailAddresses;
