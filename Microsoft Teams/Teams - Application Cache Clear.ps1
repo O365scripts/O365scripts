@@ -2,15 +2,25 @@
 .SYNOPSIS
 Clear the Microsoft Teams application cache.
 https://github.com/O365scripts/O365scripts/blob/master/Microsoft%20Teams/Teams%20-%20Application%20Cache%20Clear.ps1
+
 .NOTES
-	> You may also flush everything inside the "$env:APPDATA\Microsoft\Teams" cache folder after closing the app.
-	> Files may remain as read-only in the meeting-addin folder if Outlook is still opened.
+> Use the 1st option to flush everything inside the "$env:APPDATA\Microsoft\Teams" folder or the 2nd one to clear only specific cache folders.
+> Files in the meeting-addin folder may be undeletable and remain as read-only if Outlook is still opened, likewise for Teams.
+> To do: Copy backgrounds folder to temp before wiping full folder and moving back to bg folder.
+
 .LINK
-https://microsoftteams.uservoice.com/forums/555103-public/suggestions/34320940-clear-local-cache-button
+https://learn.microsoft.com/microsoftteams/troubleshoot/teams-administration/clear-teams-cache
 #>
 
-<# Flush specific Teams cache folders. #>
+<# a) Close Teams and flush the entire cache folder. #>
+Stop-Process -Name "Teams" -Force -Confirm:$false -ErrorAction SilentlyContinue;
+#Stop-Process -Name "Outlook" -Force -Confirm:$false -ErrorAction $ErrAction;
+Remove-Item -Path "$env:APPDATA\Microsoft\Teams\*" -Recurse -Force -Confirm:$false -ErrorAction SilentlyContinue;
+
+<# b) Close Teams and clear specific cache folders (eg: save the custom backgrounds). #>
 $ErrAction = "SilentlyContinue";
+Stop-Process -Name "Teams" -Force -Confirm:$false -ErrorAction $ErrAction;
+#Stop-Process -Name "Outlook" -Force -Confirm:$false -ErrorAction $ErrAction;
 Remove-Item -Path "$env:APPDATA\Microsoft\Teams\application cache\cache\*" -Force -Confirm:$false -ErrorAction $ErrAction;
 #emove-Item -Path "$env:APPDATA\Microsoft\Teams\backgrounds\*" -Force -Confirm:$false -ErrorAction $ErrAction;
 Remove-Item -Path "$env:APPDATA\Microsoft\Teams\blob_storage\*" -Force -Confirm:$false -ErrorAction $ErrAction;
@@ -20,6 +30,3 @@ Remove-Item -Path "$env:APPDATA\Microsoft\Teams\GPUcache\*" -Force -Confirm:$fal
 Remove-Item -Path "$env:APPDATA\Microsoft\Teams\IndexedDB\*" -Recurse -Force -Confirm:$false -ErrorAction $ErrAction;
 Remove-Item -Path "$env:APPDATA\Microsoft\Teams\Local Storage\*" -Recurse -Force -Confirm:$false -ErrorAction $ErrAction;
 Remove-Item -Path "$env:APPDATA\Microsoft\Teams\tmp\*" -Force -Confirm:$false -ErrorAction $ErrAction;
-
-<# Flush the entire Teams cache folder contents. #>
-Remove-Item -Path "$env:APPDATA\Microsoft\Teams\*" -Recurse -Force -Confirm:$false -ErrorAction SilentlyContinue;
