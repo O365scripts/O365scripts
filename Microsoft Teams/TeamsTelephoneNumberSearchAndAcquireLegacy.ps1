@@ -1,8 +1,11 @@
 <#
 .SYNOPSIS
-Teams Cloud Number Search and Acquire Management
-https://github.com/O365scripts/O365scripts/blob/master/Microsoft%20Teams/Teams%20-%20VTelephone%20Number%20Search%20and%20Acquire.ps1
+Teams Cloud Number Search and Acquire Management [Legacy]
+https://github.com/O365scripts/O365scripts/blob/master/Microsoft%20Teams/TeamsTelephoneNumberSearchAndAcquireLegacy.ps1
+
 .NOTES
+This script no longer works given the commands used were deprecated on 2022-04-30 and have been replaced by the New-CsOnlineTelephoneNumberOrder command.
+
 Get-CsOnlineTelephoneNumberInventoryTypes:	Service, Subscriber, TollFree
 Get-CsOnlineTelephoneNumberInventoryRegions: NOAM, EMEA, APAC, LATAM
 Get-CsOnlineTelephoneNumberInventoryCountries
@@ -12,13 +15,14 @@ Search-CsOnlineTelephoneNumberInventory
 Select-CsOnlineTelephoneNumberInventory
 Get-CsOnlineTelephoneNumberReservationsInformation
 Clear-CsOnlineTelephoneNumberReservation
+
 .LINK
 Reference:
-https://docs.microsoft.com/en-us/powershell/module/skype/search-csonlinetelephonenumberinventory?view=skype-ps
-https://docs.microsoft.com/en-us/powershell/module/skype/select-csonlinetelephonenumberinventory?view=skype-ps
-https://docs.microsoft.com/en-us/powershell/module/skype/get-csonlinetelephonenumberinventoryregions?view=skype-ps
-https://docs.microsoft.com/en-us/powershell/module/skype/get-csonlinetelephonenumberinventoryareas?view=skype-ps
-https://docs.microsoft.com/en-us/powershell/module/skype/get-csonlinetelephonenumber?view=skype-ps
+https://learn.microsoft.com/powershell/module/skype/search-csonlinetelephonenumberinventory
+https://learn.microsoft.com/powershell/module/skype/select-csonlinetelephonenumberinventory
+https://learn.microsoft.com/powershell/module/skype/get-csonlinetelephonenumberinventoryregions
+https://learn.microsoft.com/powershell/module/skype/get-csonlinetelephonenumberinventoryareas
+https://learn.microsoft.com/powershell/module/skype/get-csonlinetelephonenumber 
 #>
 
 <# Connect to Teams. #>
@@ -49,7 +53,6 @@ $InvNumbers = $InvSearchNumbers | Out-GridView -PassThru;
 $InvSelect = Select-CsOnlineTelephoneNumberInventory -ReservationId $InvSearch.ReservationId -TelephoneNumbers $InvNumbers -Region $InvRegion -CountryOrRegion $InvCountry -Area $InvArea -City $InvCity.Id;
 $InvNumbers | % {Get-CsOnlineTelephoneNumber -TelephoneNumber $_}
 
-
 <# Count how many total numbers of each type. #>
 $NumbersTotalService = (Get-CsOnlineTelephoneNumber -InventoryType "Service").Count;
 $NumbersTotalServiceUnassigned = (Get-CsOnlineTelephoneNumber -InventoryType "Service" -IsNotAssigned).Count;
@@ -62,7 +65,6 @@ $NumbersTollFreeUnassigned = (Get-CsOnlineTelephoneNumber -InventoryType "TollFr
 $InvMaxTotal = (Get-CsOnlineTelephoneNumberAvailableCount).Count;
 $InvMaxUser = (Get-CsOnlineTelephoneNumberAvailableCount -InventoryType "Subscriber").Count;
 $InvMaxService = (Get-CsOnlineTelephoneNumberAvailableCount -InventoryType "Service").Count;
-
 
 
 <# Current values. #>
