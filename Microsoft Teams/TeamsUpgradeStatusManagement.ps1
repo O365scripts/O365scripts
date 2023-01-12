@@ -1,18 +1,20 @@
 <#
 .SYNOPSIS
 Manage the upgrade status of the tenant and users.
-https://github.com/O365scripts/O365scripts/blob/master/Microsoft%20Teams/.ps1
+https://github.com/O365scripts/O365scripts/blob/master/Microsoft%20Teams/TeamsUpgradeStatusManagement.ps1
+
 .NOTES
-	> Skype for Business Online is officialy retired since July 31, 2021.
-	> In some cases, the tenant may be upgraded but not all the individual users so you may need to bulk force everyone to be upgraded.
+Skype for Business Online is officialy retired since July 31, 2021.
+In some cases, the tenant may be upgraded but not all the individual users so you may need to bulk force everyone to be upgraded.
+
 .LINK
 Reference:
-https://docs.microsoft.com/en-us/microsoftteams/skype-for-business-online-retirement
-https://docs.microsoft.com/en-us/microsoftteams/teams-and-skypeforbusiness-coexistence-and-interoperability
-https://docs.microsoft.com/en-us/powershell/module/skype/grant-csteamsupgradepolicy?view=skype-ps
-https://docs.microsoft.com/en-us/powershell/module/skype/get-csteamsupgradestatus?view=skype-ps
-https://docs.microsoft.com/en-us/MicrosoftTeams/upgrade-plan-journey-evaluate-environment
-https://docs.microsoft.com/en-us/microsoftteams/upgrade-assisted
+https://learn.microsoft.com/microsoftteams/skype-for-business-online-retirement
+https://learn.microsoft.com/microsoftteams/teams-and-skypeforbusiness-coexistence-and-interoperability
+https://learn.microsoft.com/MicrosoftTeams/upgrade-plan-journey-evaluate-environment
+https://learn.microsoft.com/microsoftteams/upgrade-assisted
+https://learn.microsoft.com/powershell/module/skype/grant-csteamsupgradepolicy
+https://learn.microsoft.com/powershell/module/skype/get-csteamsupgradestatus
 #>
 
 <# Connect to Teams. #>
@@ -39,8 +41,8 @@ Get-CsOnlineUser | Where {$_.TeamsUpgradeEffectiveMode -ne "TeamsOnly"} | Select
 
 <# Upgrade all users to Teams. #>
 $Status = "TeamsOnly";
-$Filter = 'TeamsUpgradeEffectiveMode -eq "{0}"' -f $Status
-Get-CsOnlineUser -Filter $Filter
+$Filter = 'TeamsUpgradeEffectiveMode -eq "{0}"' -f $Status;
+Get-CsOnlineUser -Filter $Filter;
 Get-CsOnlineUser | Where {$_.TeamsUpgradeEffectiveMode -ne "TeamsOnly"} | % { `
 	Write-Host -NoNewLine "Attempting to upgrade user "; Write-Host -NoNewline $_.DisplayName;
 	Write-Host -NoNewline " <"; Write-Host -NoNewline -Fore Yellow $_.UserPrincipalName; Write-Host ">.";
