@@ -1,6 +1,7 @@
 <#
 .SYNOPSIS
 Connecting to SharePoint Online
+https://github.com/O365scripts/O365scripts/blob/master/Connection/O365ConnectSharePointOnline.ps1
 
 .NOTES
 Connect-SPOService

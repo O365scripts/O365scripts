@@ -1,16 +1,17 @@
 <#
 .SYNOPSIS
 Connect to SharePoint Online PnP.
+https://github.com/O365scripts/O365scripts/blob/master/Connection/O365ConnectSPOPNP.ps1
 
 .NOTES
-- The SharePointPnPPowerShellOnline module has been deprecated and the PnP.PowerShell module should be used instead.
-- You will have to consent/register the PnP Management Shell Multi-Tenant Azure AD Application in your own tenant once using Register-PnPManagementShellAccess.
+> The SharePointPnPPowerShellOnline module has been deprecated and the PnP.PowerShell module should be used instead.
+> You will have to consent/register the PnP Management Shell Multi-Tenant Azure AD Application in your own tenant once using Register-PnPManagementShellAccess.
 
 .LINK
 https://pnp.github.io/powershell/articles/connecting.html
-https://docs.microsoft.com/en-us/powershell/module/sharepoint-pnp/?view=sharepoint-ps
-https://docs.microsoft.com/en-us/powershell/module/sharepoint-pnp/connect-pnponline?view=sharepoint-ps
-https://docs.microsoft.com/en-us/powershell/sharepoint/sharepoint-pnp/sharepoint-pnp-cmdlets?view=sharepoint-ps   
+https://learn.microsoft.com/en-us/powershell/module/sharepoint-pnp/
+https://learn.microsoft.com/en-us/powershell/module/sharepoint-pnp/connect-pnponline
+https://learn.microsoft.com/en-us/powershell/sharepoint/sharepoint-pnp/sharepoint-pnp-cmdlets
 #>
 
 # Connect to SharePoint PnP.
@@ -45,8 +46,7 @@ Get-InstalledModule SharePointPnPPowerShell* | % {Uninstall-Module -Name $_.Name
 #Uninstall-Module SharePointPnPPowerShell2013 -AllVersions -Force -Confirm:$false
 
 # Connect to PNP and cache credentials (no MFA).
-$AdminUpn = ""
-$Tenant = ""
+$AdminUpn = ""; $Tenant = ""
 $PnpSite = ""
 $Creds = Get-Credential -UserName $AdminUpn -Message "Login"
 Connect-PnPOnline -Url $PnpSite -Credentials $Creds

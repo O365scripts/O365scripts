@@ -22,7 +22,7 @@ Install-Module MicrosoftTeams -AllowClobber -Force -Confirm:$false
 Import-Module MicrosoftTeams
 Connect-MicrosoftTeams
 
-<# Connect to Teams without MFA. #>
+# Connect to Teams without MFA.
 $AdminUpn = ""
 $Creds = Get-Credential -Message "Login:" -UserName $AdminUpn
 Connect-MicrosoftTeams -Credential $Creds
@@ -30,6 +30,15 @@ Connect-MicrosoftTeams -Credential $Creds
 
 # Connect to Teams without MFA and without caching credentials.
 Connect-MicrosoftTeams -Credential (Get-Credential -Message "Login:" -UserName $AdminUpn)
+
+# Connect to Teams GCCH.
+Connect-MicrosoftTeams -TeamsEnvironmentName TeamsGCCH
+
+# Connect to Teams DoD.
+Connect-MicrosoftTeams -TeamsEnvironmentName TeamsDOD
+
+# Connect to Teams China.
+Connect-MicrosoftTeams -TeamsEnvironmentName TeamsChina
 
 # Install Teams module without local admin rights.
 #Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force -Confirm:$false;
