@@ -19,21 +19,23 @@ https://docs.microsoft.com/en-us/office365/enterprise/powershell/manage-office-3
 https://docs.microsoft.com/en-us/powershell/azure/active-directory/install-msonlinev1?view=azureadps-1.0
 #>
 
-<# Connect to MSOL. #>
-#Set-ExecutionPolicy RemoteSigned -Force -Confirm:$false;
-#Install-Module MSOnline -Scope CurrentUser -AllowClobber -Force -Confirm:$false;
-Import-Module MSOnline;
-Connect-MsolService;
+# Connect to MSOL.
+#Set-ExecutionPolicy RemoteSigned -Force -Confirm:$false
+Install-Module MSOnline -AllowClobber -Force -Confirm:$false
+#Update-Module MSOnline -Force -Confirm:$false
+Import-Module MSOnline
+Connect-MsolService
 
-<# Connect to MSOL without MFA. #>
-$AdminUpn = ""; $Creds = Get-Credential -UserName $AdminUpn -Message "Login:";
-Connect-MsolService -Credential $Creds;
+# Connect to MSOL without MFA.
+$AdminUpn = ""; $Creds = Get-Credential -UserName $AdminUpn -Message "Login:"
+Connect-MsolService -Credential $Creds
 
-<# Connect to MSOL without using MFA and without caching credentials. #>
-$AdminUpn = ""; Connect-MsolService -Credential (Get-Credential -UserName $AdminUpn -Message "Login:");
+# Connect to MSOL without using MFA and without caching credentials.
+$AdminUpn = ""
+Connect-MsolService -Credential (Get-Credential -UserName $AdminUpn -Message "Login:");
 
-<# Install the MSOL module as a regular user. #>
-Install-Module MSOnline -Scope CurrentUser -AllowClobber -Force -Confirm:$false;
+# Install the MSOL module as a regular user.
+Install-Module MSOnline -Scope CurrentUser -AllowClobber -Force -Confirm:$false
 
-<# Completely uninstall the MSOL module. #>
-Uninstall-Module MSOnline -AllVersions -Force -Confirm:$false -ErrorAction SilentlyContinue;
+# Completely uninstall the MSOL module.
+Uninstall-Module MSOnline -AllVersions -Force -Confirm:$false -ErrorAction SilentlyContinue
